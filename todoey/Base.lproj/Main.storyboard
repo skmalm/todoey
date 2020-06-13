@@ -29,7 +29,6 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="bXv-hY-paZ" secondAttribute="bottom" constant="11" id="T0o-Q9-hVS"/>
                                         <constraint firstItem="bXv-hY-paZ" firstAttribute="top" secondItem="MXk-7Z-haN" secondAttribute="topMargin" constant="11" id="gsC-BR-CMd"/>
@@ -37,6 +36,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="bXv-hY-paZ" secondAttribute="trailing" id="rJg-tg-seG"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="label" destination="bXv-hY-paZ" id="0NL-hP-Voi"/>
                                 </connections>

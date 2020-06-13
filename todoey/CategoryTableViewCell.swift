@@ -21,6 +21,6 @@ class CategoryTableViewCell: UITableViewCell {
     }
 
     @IBOutlet weak var label: UILabel!
-    
+
     
 }

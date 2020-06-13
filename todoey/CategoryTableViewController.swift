@@ -26,6 +26,7 @@ class CategoryTableViewController: UITableViewController {
             fatalError("Category cell dequeuing or casting error")
         }
         categoryCell.label.text = categories[indexPath.row]
+        categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row])
         return categoryCell
     }
     
