@@ -10,7 +10,7 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
 
-    let categories = ["Home", "Work", "Learn", "Eat", "Shopping List"]
+    let categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -26,7 +26,8 @@ class CategoryTableViewController: UITableViewController {
             fatalError("Category cell dequeuing or casting error")
         }
         categoryCell.label.text = categories[indexPath.row]
-        categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row])
+        // cycle through colors for cell backgrounds
+        categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row % K.categoryColorNames.count])
         return categoryCell
     }
     
