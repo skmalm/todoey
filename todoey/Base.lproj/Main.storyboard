@@ -17,14 +17,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PmN-by-HTy">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todoey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09f-S4-NA7">
+                                        <rect key="frame" x="8" y="70" width="398" height="42"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" name="categoryTop"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="TDj-0d-ecc"/>
+                                    <constraint firstAttribute="height" constant="120" id="TDj-0d-ecc"/>
+                                    <constraint firstItem="09f-S4-NA7" firstAttribute="leading" secondItem="PmN-by-HTy" secondAttribute="leading" constant="8" id="URX-cE-izU"/>
+                                    <constraint firstAttribute="trailing" secondItem="09f-S4-NA7" secondAttribute="trailing" constant="8" id="Ywn-db-8bg"/>
+                                    <constraint firstAttribute="bottom" secondItem="09f-S4-NA7" secondAttribute="bottom" constant="8" id="voF-Wa-G8J"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xvl-9U-vYP">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="120" width="414" height="742"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" rowHeight="65" id="XJb-Zm-7D8" customClass="CategoryTableViewCell" customModule="todoey" customModuleProvider="target">
