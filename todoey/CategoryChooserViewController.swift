@@ -10,11 +10,19 @@ import UIKit
 
 class CategoryChooserViewController: UIViewController {
 
-    let categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
+    var categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
     
     @IBOutlet weak var tableView: UITableView! { didSet {
         tableView.dataSource = self
     }}
+    
+    @IBAction func addCategory(_ sender: UIButton) {
+        tableView.performBatchUpdates({
+            categories.append("New Category")
+            tableView.insertRows(at: [IndexPath(row: categories.count - 1, section: 0)], with: .fade)
+        }, completion: nil)
+    }
+    
     
 }
 
