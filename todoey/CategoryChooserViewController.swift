@@ -20,7 +20,12 @@ class CategoryChooserViewController: UIViewController {
         tableView.performBatchUpdates({
             categories.append("New Category")
             tableView.insertRows(at: [IndexPath(row: categories.count - 1, section: 0)], with: .fade)
-        }, completion: nil)
+        }, completion: { [weak self] finished in
+            if finished {
+                guard let self = self else { return }
+                self.tableView.scrollToRow(at: IndexPath(row: self.categories.count - 1, section: 0), at: .none, animated: true)
+            }
+        })
     }
     
     
