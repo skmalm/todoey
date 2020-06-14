@@ -1,26 +1,30 @@
 //
-//  CategoryTableViewController.swift
+//  CategoryChooserViewController.swift
 //  todoey
 //
-//  Created by Sebastian Malm on 6/13/20.
+//  Created by Sebastian Malm on 6/14/20.
 //  Copyright © 2020 SebastianMalm. All rights reserved.
 //
 
 import UIKit
 
-class CategoryTableViewController: UITableViewController {
+class CategoryChooserViewController: UIViewController {
 
     let categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+    @IBOutlet weak var tableView: UITableView! { didSet {
+        tableView.dataSource = self
+    }}
+    
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension CategoryChooserViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.categoryCellID)
         guard let categoryCell = cell as? CategoryTableViewCell else {
             fatalError("Category cell dequeuing or casting error")
@@ -30,5 +34,4 @@ class CategoryTableViewController: UITableViewController {
         categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row % K.categoryColorNames.count])
         return categoryCell
     }
-    
 }
