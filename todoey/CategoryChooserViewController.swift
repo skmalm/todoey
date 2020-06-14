@@ -17,15 +17,23 @@ class CategoryChooserViewController: UIViewController {
     }}
     
     @IBAction func addCategory(_ sender: UIButton) {
-        tableView.performBatchUpdates({
-            categories.append("New Category")
-            tableView.insertRows(at: [IndexPath(row: categories.count - 1, section: 0)], with: .fade)
-        }, completion: { [weak self] finished in
-            if finished {
-                guard let self = self else { return }
-                self.tableView.scrollToRow(at: IndexPath(row: self.categories.count - 1, section: 0), at: .none, animated: true)
-            }
-        })
+        let alert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = "New Category"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] _ in
+            let textField = alert!.textFields![0]
+            guard let self = self else { return }
+            self.tableView.performBatchUpdates({
+                self.categories.append(textField.text!)
+                self.tableView.insertRows(at: [IndexPath(row: self.categories.count - 1, section: 0)], with: .fade)
+            }, completion: { finished in
+                if finished {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.categories.count - 1, section: 0), at: .none, animated: true)
+                }
+            })
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     
