@@ -17,23 +17,30 @@ class CategoryChooserViewController: UIViewController {
     }}
     
     @IBAction func addCategory(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
-        alert.addTextField { textField in
-            textField.text = "New Category"
+        let newCategoryAlert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
+        newCategoryAlert.addTextField { textField in
+            textField.placeholder = "Enter Category Name"
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] _ in
-            let textField = alert!.textFields![0]
+        newCategoryAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak newCategoryAlert, weak self] _ in
             guard let self = self else { return }
-            self.tableView.performBatchUpdates({
-                self.categories.append(textField.text!)
-                self.tableView.insertRows(at: [IndexPath(row: self.categories.count - 1, section: 0)], with: .fade)
-            }, completion: { finished in
-                if finished {
-                    self.tableView.scrollToRow(at: IndexPath(row: self.categories.count - 1, section: 0), at: .none, animated: true)
-                }
-            })
+            let textField = newCategoryAlert!.textFields![0]
+            if textField.text! == "" {
+                let emptyNameAlert = UIAlertController(title: "Error", message: "Category name cannot be empty!", preferredStyle: .alert)
+                emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(emptyNameAlert, animated: true, completion: nil)
+                return
+            } else {
+                self.tableView.performBatchUpdates({
+                    self.categories.append(textField.text!)
+                    self.tableView.insertRows(at: [IndexPath(row: self.categories.count - 1, section: 0)], with: .fade)
+                }, completion: { finished in
+                    if finished {
+                        self.tableView.scrollToRow(at: IndexPath(row: self.categories.count - 1, section: 0), at: .none, animated: true)
+                    }
+                })
+            }
         }))
-        self.present(alert, animated: true, completion: nil)
+        self.present(newCategoryAlert, animated: true, completion: nil)
     }
     
     
