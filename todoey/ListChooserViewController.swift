@@ -68,6 +68,20 @@ class ListChooserViewController: UIViewController {
         }))
         self.present(newListAlert, animated: true, completion: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let selectedCell = sender as? UITableViewCell else {
+            print("List cell casting error")
+            return
+        }
+        guard let destinationListVC = segue.destination as? ListViewController else {
+            print("Error getting destiation ListViewController")
+            return
+        }
+        if selectedCell.backgroundColor != nil {
+            destinationListVC.listColor = selectedCell.backgroundColor!
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
