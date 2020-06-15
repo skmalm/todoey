@@ -10,11 +10,15 @@ import UIKit
 
 class CategoryChooserViewController: UIViewController {
 
+    // MARK: - PROPERTIES
+    
     var categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
     
     @IBOutlet weak var tableView: UITableView! { didSet {
         tableView.dataSource = self
     }}
+    
+    // MARK: - METHODS
     
     @IBAction func addCategory(_ sender: UIButton) {
         let newCategoryAlert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
@@ -45,6 +49,8 @@ class CategoryChooserViewController: UIViewController {
     
     
 }
+
+// MARK: - UITableViewDataSource
 
 extension CategoryChooserViewController: UITableViewDataSource {
     
