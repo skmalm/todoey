@@ -14,6 +14,7 @@
 		9E71E4AC24957BB1005AB97D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E71E4AA24957BB1005AB97D /* LaunchScreen.storyboard */; };
 		9E71E4B724958710005AB97D /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4B624958710005AB97D /* K.swift */; };
 		9E71E4B924958860005AB97D /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4B824958860005AB97D /* CategoryTableViewCell.swift */; };
+		9E9ACF4E2497E66F00EC9C89 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9ACF4D2497E66F00EC9C89 /* ListViewController.swift */; };
 		9EA11FD82496CB8C00955332 /* CategoryChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA11FD72496CB8C00955332 /* CategoryChooserViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		9E71E4AD24957BB1005AB97D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E71E4B624958710005AB97D /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		9E71E4B824958860005AB97D /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		9E9ACF4D2497E66F00EC9C89 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		9EA11FD72496CB8C00955332 /* CategoryChooserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				9E71E4A524957BAE005AB97D /* Main.storyboard */,
+				9E9ACF4D2497E66F00EC9C89 /* ListViewController.swift */,
 				9EA11FD72496CB8C00955332 /* CategoryChooserViewController.swift */,
 				9E71E4B824958860005AB97D /* CategoryTableViewCell.swift */,
 				9E71E4B624958710005AB97D /* K.swift */,
@@ -154,6 +157,7 @@
 			files = (
 				9E71E4B924958860005AB97D /* CategoryTableViewCell.swift in Sources */,
 				9E71E4A024957BAE005AB97D /* AppDelegate.swift in Sources */,
+				9E9ACF4E2497E66F00EC9C89 /* ListViewController.swift in Sources */,
 				9E71E4B724958710005AB97D /* K.swift in Sources */,
 				9E71E4A224957BAE005AB97D /* SceneDelegate.swift in Sources */,
 				9EA11FD82496CB8C00955332 /* CategoryChooserViewController.swift in Sources */,

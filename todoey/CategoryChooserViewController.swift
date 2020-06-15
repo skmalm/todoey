@@ -10,12 +10,22 @@ import UIKit
 
 class CategoryChooserViewController: UIViewController {
 
+    // MARK: - LIFECYCLE
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        // reload data to ensure no row is selected
+        tableView.reloadData()
+    }
+    
     // MARK: - PROPERTIES
     
     var categories = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
     
     @IBOutlet weak var tableView: UITableView! { didSet {
         tableView.dataSource = self
+        tableView.delegate = self
     }}
     
     // MARK: - METHODS
@@ -71,4 +81,14 @@ extension CategoryChooserViewController: UITableViewDataSource {
         categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row % K.categoryColorNames.count])
         return categoryCell
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension CategoryChooserViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: K.showListSegueID, sender: tableView.cellForRow(at: indexPath))
+    }
+    
 }
