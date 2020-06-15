@@ -29,9 +29,14 @@ class CategoryChooserViewController: UIViewController {
             guard let self = self else { return }
             let textField = newCategoryAlert!.textFields![0]
             if textField.text! == "" {
-                let emptyNameAlert = UIAlertController(title: "Error", message: "Category name cannot be empty!", preferredStyle: .alert)
+                let emptyNameAlert = UIAlertController(title: "Error", message: "Category name cannot be empty.", preferredStyle: .alert)
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
+                return
+            } else if self.categories.contains(textField.text!) {
+                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a category with this name.", preferredStyle: .alert)
+                duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(duplicateNameAlert, animated: true, completion: nil)
                 return
             } else {
                 self.tableView.performBatchUpdates({
