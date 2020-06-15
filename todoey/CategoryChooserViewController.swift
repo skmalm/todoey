@@ -51,8 +51,6 @@ class CategoryChooserViewController: UIViewController {
         }))
         self.present(newCategoryAlert, animated: true, completion: nil)
     }
-    
-    
 }
 
 // MARK: - UITableViewDataSource
