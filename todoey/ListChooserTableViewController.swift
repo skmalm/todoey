@@ -1,15 +1,15 @@
 //
-//  CategoryChooserViewController.swift
+//  ListChooserTableViewController.swift
 //  todoey
 //
-//  Created by Sebastian Malm on 6/14/20.
+//  Created by Sebastian Malm on 6/15/20.
 //  Copyright © 2020 SebastianMalm. All rights reserved.
 //
 
 import UIKit
 
-class ListChooserViewController: UIViewController {
-    
+class ListChooserTableViewController: UITableViewController {
+
     // MARK: - LIFECYCLE
     
     override func viewDidLoad() {
@@ -21,7 +21,6 @@ class ListChooserViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         // reload data to ensure no row is selected
         tableView.reloadData()
     }
@@ -29,12 +28,7 @@ class ListChooserViewController: UIViewController {
     // MARK: - PROPERTIES
     
     var model = TodoeyModel()
-    
-    @IBOutlet weak var tableView: UITableView! { didSet {
-        tableView.dataSource = self
-        tableView.delegate = self
-    }}
-    
+        
     // MARK: - METHODS
     
     @IBAction func addList(_ sender: UIButton) {
@@ -74,25 +68,22 @@ class ListChooserViewController: UIViewController {
             print("List cell casting error")
             return
         }
-        guard let destinationListVC = segue.destination as? ListViewController else {
-            print("Error getting destiation ListViewController")
+        guard let destinationListVC = segue.destination as? ListTableViewController else {
+            print("Error getting destination ListViewController")
             return
         }
         if selectedCell.backgroundColor != nil {
             destinationListVC.listColor = selectedCell.backgroundColor!
         }
     }
-}
 
-// MARK: - UITableViewDataSource
-
-extension ListChooserViewController: UITableViewDataSource {
+    // MARK: - UITableViewDataSource
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.lists.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)
         guard let categoryCell = cell as? ListTableViewCell else {
             fatalError("List cell dequeuing or casting error")
@@ -102,13 +93,10 @@ extension ListChooserViewController: UITableViewDataSource {
         categoryCell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
         return categoryCell
     }
-}
-
-// MARK: - UITableViewDelegate
-
-extension ListChooserViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.showListSegueID, sender: tableView.cellForRow(at: indexPath))
     }
     

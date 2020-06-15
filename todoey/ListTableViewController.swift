@@ -1,5 +1,5 @@
 //
-//  ListViewController.swift
+//  ListTableViewController.swift
 //  todoey
 //
 //  Created by Sebastian Malm on 6/15/20.
@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+class ListTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.barTintColor = listColor
+        navigationController?.navigationBar.backgroundColor = listColor
+        
     }
-    
+
     // white is used as default color
     var listColor = UIColor.white
     

@@ -1,148 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mIK-ID-Eql">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="foA-5D-lhs">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--List Chooser View Controller-->
-        <scene sceneID="uON-xb-k2l">
+        <!--Todoey-->
+        <scene sceneID="0WK-yw-vew">
             <objects>
-                <viewController id="HQZ-kU-q4z" customClass="ListChooserViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="e3V-dB-ECp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PmN-by-HTy">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todoey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09f-S4-NA7">
-                                        <rect key="frame" x="8" y="64" width="398" height="42"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3o-he-1Zo">
-                                        <rect key="frame" x="370.5" y="44" width="21.5" height="22"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="plus" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addList:" destination="HQZ-kU-q4z" eventType="touchUpInside" id="L5e-T9-JMO"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" name="chooserTop"/>
-                                <constraints>
-                                    <constraint firstItem="W3o-he-1Zo" firstAttribute="top" secondItem="PmN-by-HTy" secondAttribute="top" constant="44" id="2q8-lO-8a3"/>
-                                    <constraint firstAttribute="height" constant="120" id="TDj-0d-ecc"/>
-                                    <constraint firstItem="09f-S4-NA7" firstAttribute="leading" secondItem="PmN-by-HTy" secondAttribute="leading" constant="8" id="URX-cE-izU"/>
-                                    <constraint firstAttribute="trailing" secondItem="09f-S4-NA7" secondAttribute="trailing" constant="8" id="Ywn-db-8bg"/>
-                                    <constraint firstAttribute="trailing" secondItem="W3o-he-1Zo" secondAttribute="trailing" constant="22" id="ukf-3v-AYi"/>
-                                    <constraint firstAttribute="bottom" secondItem="09f-S4-NA7" secondAttribute="bottom" constant="14" id="voF-Wa-G8J"/>
-                                </constraints>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" estimatedRowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xvl-9U-vYP">
-                                <rect key="frame" x="0.0" y="120" width="414" height="742"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListCell" rowHeight="65" id="XJb-Zm-7D8" customClass="ListTableViewCell" customModule="todoey" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="65"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XJb-Zm-7D8" id="o1s-2P-Xah">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhj-8P-GSd">
-                                                    <rect key="frame" x="20" y="6.5" width="374" height="52"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Lhj-8P-GSd" secondAttribute="bottom" constant="6.5" id="Hv8-b1-rAl"/>
-                                                <constraint firstItem="Lhj-8P-GSd" firstAttribute="leading" secondItem="o1s-2P-Xah" secondAttribute="leading" constant="20" id="MhX-5d-HAM"/>
-                                                <constraint firstItem="Lhj-8P-GSd" firstAttribute="top" secondItem="o1s-2P-Xah" secondAttribute="top" constant="6.5" id="WpF-AC-wbK"/>
-                                                <constraint firstAttribute="trailing" secondItem="Lhj-8P-GSd" secondAttribute="trailing" constant="20" id="f2H-lu-gbB"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="label" destination="Lhj-8P-GSd" id="1hv-sN-8M1"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="PmN-by-HTy" secondAttribute="trailing" id="5dT-48-NTk"/>
-                            <constraint firstItem="OJr-Z3-3AZ" firstAttribute="trailing" secondItem="Xvl-9U-vYP" secondAttribute="trailing" id="65B-VL-y7k"/>
-                            <constraint firstItem="PmN-by-HTy" firstAttribute="leading" secondItem="e3V-dB-ECp" secondAttribute="leading" id="T3K-Cn-Fk9"/>
-                            <constraint firstItem="Xvl-9U-vYP" firstAttribute="leading" secondItem="OJr-Z3-3AZ" secondAttribute="leading" id="ZMu-qc-XhZ"/>
-                            <constraint firstItem="PmN-by-HTy" firstAttribute="top" secondItem="e3V-dB-ECp" secondAttribute="top" id="aD3-6r-36Q"/>
-                            <constraint firstItem="Xvl-9U-vYP" firstAttribute="top" secondItem="PmN-by-HTy" secondAttribute="bottom" id="aWo-U4-D7j"/>
-                            <constraint firstItem="OJr-Z3-3AZ" firstAttribute="bottom" secondItem="Xvl-9U-vYP" secondAttribute="bottom" id="wYE-Xh-UEi"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="OJr-Z3-3AZ"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="1aV-Qf-947"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="tableView" destination="Xvl-9U-vYP" id="XED-Wj-wnc"/>
-                        <segue destination="gpu-UB-gLI" kind="show" identifier="ShowList" id="VNw-ht-vNT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BYe-m9-UEC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="868.11594202898561" y="-111.16071428571428"/>
-        </scene>
-        <!--List View Controller-->
-        <scene sceneID="HZP-MO-he7">
-            <objects>
-                <viewController id="gpu-UB-gLI" customClass="ListViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iBX-D2-Fkd">
+                <tableViewController id="qHc-Wg-7jz" customClass="ListChooserTableViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" estimatedRowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vft-GC-h86">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="mvc-m8-rX4"/>
-                    </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="onV-hW-4vG"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PuR-01-4wO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="Fnp-63-Yre" customClass="ListTableViewCell" customModule="todoey" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="65"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fnp-63-Yre" id="b3u-de-orJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfY-EX-BbN">
+                                            <rect key="frame" x="20" y="6.5" width="374" height="52"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="lfY-EX-BbN" secondAttribute="bottom" constant="6.5" id="F1x-vP-BQc"/>
+                                        <constraint firstItem="lfY-EX-BbN" firstAttribute="top" secondItem="b3u-de-orJ" secondAttribute="top" constant="6.5" id="rIM-vG-JlW"/>
+                                        <constraint firstAttribute="trailing" secondItem="lfY-EX-BbN" secondAttribute="trailing" constant="20" id="vrr-LG-nTe"/>
+                                        <constraint firstItem="lfY-EX-BbN" firstAttribute="leading" secondItem="b3u-de-orJ" secondAttribute="leading" constant="20" id="xzZ-hF-Yye"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="label" destination="lfY-EX-BbN" id="qzz-5Z-4kJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qHc-Wg-7jz" id="MNk-rJ-x3y"/>
+                            <outlet property="delegate" destination="qHc-Wg-7jz" id="MNV-Fm-FSd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Todoey" id="0KA-Rh-wJm"/>
+                    <connections>
+                        <segue destination="X1B-zX-tha" kind="show" identifier="ShowList" id="XjI-Vy-fxy"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nsa-l4-muu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1704" y="-111"/>
+            <point key="canvasLocation" x="1768.1159420289857" y="-827.00892857142856"/>
+        </scene>
+        <!--List Table View Controller-->
+        <scene sceneID="s5X-Z2-GfK">
+            <objects>
+                <tableViewController id="X1B-zX-tha" customClass="ListTableViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8SK-T7-rNb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoCell" id="eAY-SN-Pra">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eAY-SN-Pra" id="uBk-rg-B3G">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="X1B-zX-tha" id="OJp-xY-iyh"/>
+                            <outlet property="delegate" destination="X1B-zX-tha" id="yS1-t4-xMl"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="h0t-Hm-Syx"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Th-9Z-6X9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2734.7826086956525" y="-827.00892857142856"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="o21-BC-aye">
+        <scene sceneID="CI6-sq-GwY">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mIK-ID-Eql" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="foA-5D-lhs" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="gAL-ds-LVd">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="1bs-Xb-6Ce">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="ChooserTheme"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" name="ChooserTheme"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="HQZ-kU-q4z" kind="relationship" relationship="rootViewController" id="p7q-Hj-uSN"/>
+                        <segue destination="qHc-Wg-7jz" kind="relationship" relationship="rootViewController" id="drO-zN-Wiw"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="frz-v7-tKB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGY-vh-F8Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="-111"/>
+            <point key="canvasLocation" x="857.97101449275374" y="-827.00892857142856"/>
         </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="128" height="113"/>
-        <namedColor name="chooserTop">
+        <namedColor name="ChooserTheme">
             <color red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
