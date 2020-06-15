@@ -14,7 +14,7 @@ class ListChooserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for defaultListName in K.defaultCategoryNames {
+        for defaultListName in K.defaultListNames {
             model.lists.append(TodoList(name: defaultListName))
         }
     }
@@ -37,21 +37,21 @@ class ListChooserViewController: UIViewController {
     
     // MARK: - METHODS
     
-    @IBAction func addCategory(_ sender: UIButton) {
-        let newCategoryAlert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
-        newCategoryAlert.addTextField { textField in
-            textField.placeholder = "Enter Category Name"
+    @IBAction func addList(_ sender: UIButton) {
+        let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
+        newListAlert.addTextField { textField in
+            textField.placeholder = "Enter List Name"
         }
-        newCategoryAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak newCategoryAlert, weak self] _ in
+        newListAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak newListAlert, weak self] _ in
             guard let self = self else { return }
-            let textField = newCategoryAlert!.textFields![0]
+            let textField = newListAlert!.textFields![0]
             if textField.text! == "" {
-                let emptyNameAlert = UIAlertController(title: "Error", message: "Category name cannot be empty.", preferredStyle: .alert)
+                let emptyNameAlert = UIAlertController(title: "Error", message: "Todo list name cannot be empty.", preferredStyle: .alert)
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
             } else if self.model.lists.contains(TodoList(name: textField.text!)) {
-                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a category with this name.", preferredStyle: .alert)
+                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo list with this name.", preferredStyle: .alert)
                 duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(duplicateNameAlert, animated: true, completion: nil)
                 return
@@ -66,7 +66,7 @@ class ListChooserViewController: UIViewController {
                 })
             }
         }))
-        self.present(newCategoryAlert, animated: true, completion: nil)
+        self.present(newListAlert, animated: true, completion: nil)
     }
 }
 
@@ -79,13 +79,13 @@ extension ListChooserViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.categoryCellID)
-        guard let categoryCell = cell as? CategoryTableViewCell else {
-            fatalError("Category cell dequeuing or casting error")
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)
+        guard let categoryCell = cell as? ListTableViewCell else {
+            fatalError("List cell dequeuing or casting error")
         }
         categoryCell.label.text = model.lists[indexPath.row].name
         // cycle through colors for cell backgrounds
-        categoryCell.backgroundColor = UIColor(named: K.categoryColorNames[indexPath.row % K.categoryColorNames.count])
+        categoryCell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
         return categoryCell
     }
 }

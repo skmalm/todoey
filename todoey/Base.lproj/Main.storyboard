@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Category Chooser View Controller-->
+        <!--List Chooser View Controller-->
         <scene sceneID="uON-xb-k2l">
             <objects>
-                <viewController id="HQZ-kU-q4z" customClass="CategoryChooserViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HQZ-kU-q4z" customClass="ListChooserViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e3V-dB-ECp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,11 +33,11 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                         </state>
                                         <connections>
-                                            <action selector="addCategory:" destination="HQZ-kU-q4z" eventType="touchUpInside" id="L5e-T9-JMO"/>
+                                            <action selector="addList:" destination="HQZ-kU-q4z" eventType="touchUpInside" id="L5e-T9-JMO"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" name="categoryTop"/>
+                                <color key="backgroundColor" name="chooserTop"/>
                                 <constraints>
                                     <constraint firstItem="W3o-he-1Zo" firstAttribute="top" secondItem="PmN-by-HTy" secondAttribute="top" constant="44" id="2q8-lO-8a3"/>
                                     <constraint firstAttribute="height" constant="120" id="TDj-0d-ecc"/>
@@ -51,7 +51,7 @@
                                 <rect key="frame" x="0.0" y="120" width="414" height="742"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" rowHeight="65" id="XJb-Zm-7D8" customClass="CategoryTableViewCell" customModule="todoey" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListCell" rowHeight="65" id="XJb-Zm-7D8" customClass="ListTableViewCell" customModule="todoey" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XJb-Zm-7D8" id="o1s-2P-Xah">
@@ -141,7 +141,7 @@
     </scenes>
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <namedColor name="categoryTop">
+        <namedColor name="chooserTop">
             <color red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>

@@ -9,7 +9,9 @@
 import Foundation
 
 struct K {
-    static let categoryCellID = "CategoryCell"
+    static let listCellID = "ListCell"
     static let showListSegueID = "ShowList"
-    static let categoryColorNames = ["category0", "category1", "category2", "category3", "category4", "category5", "category6"]
+    static let listColorNames = ["list0", "list1", "list2", "list3", "list4", "list5", "list6"]
+    
+    static let defaultListNames = ["Home", "Work", "Learn", "Eat", "Shopping List", "Exercise"]
 }

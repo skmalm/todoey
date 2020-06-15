@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryTableViewCell: UITableViewCell {
+class ListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
     
