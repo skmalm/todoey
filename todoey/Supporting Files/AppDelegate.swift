@@ -16,8 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let navBarAppearance = UINavigationBarAppearance()
-        // setting color makes color unchangeable
-//        navBarAppearance.backgroundColor = .orange
+        navBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         UINavigationBar.appearance().tintColor = .black
