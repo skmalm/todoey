@@ -9,15 +9,12 @@
 import UIKit
 
 class ListTableViewController: UITableViewController {
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.backgroundColor = listColor
-        
     }
 
     // white is used as default color
     var listColor = UIColor.white
-    
 }

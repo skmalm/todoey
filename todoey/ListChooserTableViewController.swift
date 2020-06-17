@@ -21,6 +21,7 @@ class ListChooserTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.backgroundColor = UIColor(named: K.chooserBarColorName)
         // reload data to ensure no row is selected
         tableView.reloadData()
     }

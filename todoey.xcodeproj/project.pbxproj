@@ -15,7 +15,6 @@
 		9E71E4B724958710005AB97D /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4B624958710005AB97D /* K.swift */; };
 		9E71E4B924958860005AB97D /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4B824958860005AB97D /* ListTableViewCell.swift */; };
 		9E9ACF502497EC2300EC9C89 /* TodoeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */; };
-		9EDB20CB249A9BAC007EF218 /* TodoeyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB20CA249A9BAC007EF218 /* TodoeyNavigationController.swift */; };
 		9EE2AE582498030C00222386 /* ListChooserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */; };
 		9EE2AE5A249803F700222386 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2AE59249803F700222386 /* ListTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -31,7 +30,6 @@
 		9E71E4B624958710005AB97D /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		9E71E4B824958860005AB97D /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoeyModel.swift; sourceTree = "<group>"; };
-		9EDB20CA249A9BAC007EF218 /* TodoeyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoeyNavigationController.swift; sourceTree = "<group>"; };
 		9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListChooserTableViewController.swift; sourceTree = "<group>"; };
 		9EE2AE59249803F700222386 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				9E71E4A524957BAE005AB97D /* Main.storyboard */,
-				9EDB20CA249A9BAC007EF218 /* TodoeyNavigationController.swift */,
 				9EE2AE59249803F700222386 /* ListTableViewController.swift */,
 				9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */,
 				9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */,
@@ -167,7 +164,6 @@
 				9E71E4B724958710005AB97D /* K.swift in Sources */,
 				9EE2AE582498030C00222386 /* ListChooserTableViewController.swift in Sources */,
 				9EE2AE5A249803F700222386 /* ListTableViewController.swift in Sources */,
-				9EDB20CB249A9BAC007EF218 /* TodoeyNavigationController.swift in Sources */,
 				9E71E4A224957BAE005AB97D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
