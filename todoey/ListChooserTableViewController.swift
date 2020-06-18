@@ -17,6 +17,8 @@ class ListChooserTableViewController: UITableViewController {
         for defaultListName in K.defaultListNames {
             model.lists.append(TodoList(name: defaultListName))
         }
+        model.lists[0].todos = ["Sweep", "Organize"]
+        model.lists[1].todos = ["Finish project", "Call client", "Submit hours"]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +79,9 @@ class ListChooserTableViewController: UITableViewController {
         if selectedListCell.backgroundColor != nil {
             destinationListVC.listColor = selectedListCell.backgroundColor!
         }
-        destinationListVC.navigationItem.title = selectedListCell.label.text
+        let listIndex = model.lists.firstIndex(of: TodoList(name: selectedListCell.label.text!))
+        assert(listIndex != nil, "Failed to get list index in prepare")
+        destinationListVC.list = model.lists[listIndex!]
     }
 
     // MARK: - UITableViewDataSource
