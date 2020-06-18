@@ -47,7 +47,14 @@
                             <outlet property="delegate" destination="qHc-Wg-7jz" id="MNV-Fm-FSd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todoey" id="0KA-Rh-wJm"/>
+                    <navigationItem key="navigationItem" title="Todoey" id="0KA-Rh-wJm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sQC-of-I2d">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addList:" destination="qHc-Wg-7jz" id="9ff-SS-1XS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="X1B-zX-tha" kind="show" identifier="ShowList" id="XjI-Vy-fxy"/>
                     </connections>

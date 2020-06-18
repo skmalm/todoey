@@ -32,7 +32,8 @@ class ListChooserTableViewController: UITableViewController {
         
     // MARK: - METHODS
     
-    @IBAction func addList(_ sender: UIButton) {
+    
+    @IBAction func addList(_ sender: UIBarButtonItem) {
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
         newListAlert.addTextField { textField in
             textField.placeholder = "Enter List Name"
@@ -63,7 +64,7 @@ class ListChooserTableViewController: UITableViewController {
         }))
         self.present(newListAlert, animated: true, completion: nil)
     }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let selectedListCell = sender as? ListTableViewCell else {
             print("List cell casting error")
