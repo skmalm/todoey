@@ -56,7 +56,7 @@
             </objects>
             <point key="canvasLocation" x="1768.1159420289857" y="-827.00892857142856"/>
         </scene>
-        <!--List Table View Controller-->
+        <!--List-->
         <scene sceneID="s5X-Z2-GfK">
             <objects>
                 <tableViewController id="X1B-zX-tha" customClass="ListTableViewController" customModule="todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -79,7 +79,7 @@
                             <outlet property="delegate" destination="X1B-zX-tha" id="yS1-t4-xMl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="h0t-Hm-Syx"/>
+                    <navigationItem key="navigationItem" title="List" id="h0t-Hm-Syx"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Th-9Z-6X9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

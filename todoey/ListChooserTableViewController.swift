@@ -65,7 +65,7 @@ class ListChooserTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedCell = sender as? UITableViewCell else {
+        guard let selectedListCell = sender as? ListTableViewCell else {
             print("List cell casting error")
             return
         }
@@ -73,9 +73,10 @@ class ListChooserTableViewController: UITableViewController {
             print("Error getting destination ListViewController")
             return
         }
-        if selectedCell.backgroundColor != nil {
-            destinationListVC.listColor = selectedCell.backgroundColor!
+        if selectedListCell.backgroundColor != nil {
+            destinationListVC.listColor = selectedListCell.backgroundColor!
         }
+        destinationListVC.navigationItem.title = selectedListCell.label.text
     }
 
     // MARK: - UITableViewDataSource
