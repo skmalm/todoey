@@ -66,9 +66,9 @@
 			children = (
 				9E71E4A524957BAE005AB97D /* Main.storyboard */,
 				9EE2AE59249803F700222386 /* ListTableViewController.swift */,
-				9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */,
 				9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */,
 				9E71E4B824958860005AB97D /* ListTableViewCell.swift */,
+				9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */,
 				9E71E4B624958710005AB97D /* K.swift */,
 				9E71E4A824957BB1005AB97D /* Assets.xcassets */,
 				9E71E4AA24957BB1005AB97D /* LaunchScreen.storyboard */,
