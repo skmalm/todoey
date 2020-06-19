@@ -69,8 +69,9 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
         cell.textLabel?.text = list.todos[indexPath.row]
-        cell.backgroundColor = listColor
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         cell.textLabel?.textColor = .white
+        cell.backgroundColor = listColor
         return cell
     }
 }
