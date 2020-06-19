@@ -105,7 +105,12 @@ class ListChooserTableViewController: UITableViewController {
             tableView.performBatchUpdates({
                 model.lists.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-            }, completion: nil)
+            }, completion: { finished in
+                if finished {
+                    // reload section to refresh colors
+                    tableView.reloadSections([0], with: .none)
+                }
+            })
         }
     }
     
