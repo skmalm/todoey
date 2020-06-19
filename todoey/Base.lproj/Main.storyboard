@@ -15,31 +15,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="Fnp-63-Yre" customClass="ListTableViewCell" customModule="todoey" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="Fnp-63-Yre">
                                 <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fnp-63-Yre" id="b3u-de-orJ">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfY-EX-BbN">
-                                            <rect key="frame" x="20" y="6.5" width="374" height="52"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="lfY-EX-BbN" secondAttribute="bottom" constant="6.5" id="F1x-vP-BQc"/>
-                                        <constraint firstItem="lfY-EX-BbN" firstAttribute="top" secondItem="b3u-de-orJ" secondAttribute="top" constant="6.5" id="rIM-vG-JlW"/>
-                                        <constraint firstAttribute="trailing" secondItem="lfY-EX-BbN" secondAttribute="trailing" constant="20" id="vrr-LG-nTe"/>
-                                        <constraint firstItem="lfY-EX-BbN" firstAttribute="leading" secondItem="b3u-de-orJ" secondAttribute="leading" constant="20" id="xzZ-hF-Yye"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="label" destination="lfY-EX-BbN" id="qzz-5Z-4kJ"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

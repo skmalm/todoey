@@ -68,7 +68,7 @@ class ListChooserTableViewController: UITableViewController {
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedListCell = sender as? ListTableViewCell else {
+        guard let selectedCell = sender as? UITableViewCell else {
             print("List cell casting error")
             return
         }
@@ -76,10 +76,10 @@ class ListChooserTableViewController: UITableViewController {
             print("Error getting destination ListViewController")
             return
         }
-        if selectedListCell.backgroundColor != nil {
-            destinationListVC.listColor = selectedListCell.backgroundColor!
+        if selectedCell.backgroundColor != nil {
+            destinationListVC.listColor = selectedCell.backgroundColor!
         }
-        let listIndex = model.lists.firstIndex(of: TodoList(name: selectedListCell.label.text!))
+        let listIndex = model.lists.firstIndex(of: TodoList(name: selectedCell.textLabel!.text!))
         assert(listIndex != nil, "Failed to get list index in prepare")
         destinationListVC.list = model.lists[listIndex!]
     }
@@ -91,14 +91,13 @@ class ListChooserTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)
-        guard let categoryCell = cell as? ListTableViewCell else {
-            fatalError("List cell dequeuing or casting error")
-        }
-        categoryCell.label.text = model.lists[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)!
+        cell.textLabel?.text = model.lists[indexPath.row].name
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
+        cell.textLabel?.textColor = .white
         // cycle through colors for cell backgrounds
-        categoryCell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
-        return categoryCell
+        cell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
+        return cell
     }
     
     // MARK: - UITableViewDelegate
