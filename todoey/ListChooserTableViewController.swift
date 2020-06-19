@@ -100,6 +100,15 @@ class ListChooserTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.performBatchUpdates({
+                model.lists.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }, completion: nil)
+        }
+    }
+    
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
