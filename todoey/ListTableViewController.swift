@@ -60,6 +60,8 @@ class ListTableViewController: UITableViewController {
                     self.tableView.insertRows(at: [IndexPath(row: self.list.todos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
+                        // reload table view data to refresh cell colors, then scroll to new row
+                        self.tableView.reloadSections([0], with: .none)
                         self.tableView.scrollToRow(at: IndexPath(row: self.list.todos.count - 1, section: 0), at: .none, animated: true)
                     }
                 })
