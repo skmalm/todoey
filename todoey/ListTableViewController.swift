@@ -85,4 +85,18 @@ class ListTableViewController: UITableViewController {
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.performBatchUpdates({
+                list.todos.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }) { finished in
+                if finished {
+                    // reload section to refresh colors
+                    tableView.reloadSections([0], with: .none)
+                }
+            }
+        }
+    }
 }
