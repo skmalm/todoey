@@ -25,6 +25,15 @@ class ListTableViewController: UITableViewController {
     // white is used as default color
     var listColor = UIColor.white
     
+    // array with alpha level for each cell, creating a gradient effect
+    var cellAlphas: [CGFloat] {
+        var alphas = [CGFloat]()
+        let alphaIncrement: CGFloat = 1.0 / CGFloat(list.todos.count)
+        for i in 0..<list.todos.count {
+            alphas.append(1.0 - CGFloat(i) * alphaIncrement)
+        }
+        return alphas
+    }
     // MARK: - METHODS
     
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
@@ -71,7 +80,7 @@ class ListTableViewController: UITableViewController {
         cell.textLabel?.text = list.todos[indexPath.row]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         cell.textLabel?.textColor = .white
-        cell.backgroundColor = listColor
+        cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         return cell
     }
 }

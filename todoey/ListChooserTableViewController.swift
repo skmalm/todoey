@@ -17,7 +17,7 @@ class ListChooserTableViewController: UITableViewController {
         for defaultListName in K.defaultListNames {
             model.lists.append(TodoList(name: defaultListName))
         }
-        model.lists[0].todos = ["Sweep", "Organize"]
+        model.lists[0].todos = ["Sweep", "Organize bedroom", "Clean kitchen", "Reorder books", "Clean windows", "Do dishes", "Clean bathroom", "Mop", "Organize pantry", "Make bed", "Rearrange furniture", "Buy candles", "Clean bathtub"]
         model.lists[1].todos = ["Finish project", "Call client", "Submit hours"]
     }
     
