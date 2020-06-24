@@ -12,6 +12,11 @@ class ListTableViewController: UITableViewController {
     
     // MARK: - LIFECYCLE
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        tableView.selectionSt
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = listColor
@@ -79,9 +84,13 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
-        cell.textLabel?.text = list.todos[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
-        cell.textLabel?.textColor = .white
+        let font = UIFont.systemFont(ofSize: 25.0)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white
+        ]
+        let attributedText = NSMutableAttributedString(string: list.todos[indexPath.row], attributes: attributes)
+        cell.textLabel?.attributedText = attributedText
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         return cell
     }
@@ -98,5 +107,26 @@ class ListTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tappedCell = tableView.cellForRow(at: indexPath)
+        guard let attributedTodoString = tappedCell?.textLabel?.attributedText else {
+            print("Unable to get attributed string from tapped cell")
+            return
+        }
+        let mutableTodoString = NSMutableAttributedString(attributedString: attributedTodoString)
+        let range = NSMakeRange(0, mutableTodoString.length)
+        // toggle strikethrough
+        mutableTodoString.enumerateAttribute(NSAttributedString.Key.strikethroughStyle, in: range, options: .longestEffectiveRangeNotRequired) { (attribute, range, pointer) in
+            if attribute != nil {
+                mutableTodoString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: range)
+            } else {
+                mutableTodoString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, mutableTodoString.length))
+            }
+        }
+        tappedCell?.textLabel?.attributedText = mutableTodoString
     }
 }
