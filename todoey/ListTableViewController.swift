@@ -54,14 +54,14 @@ class ListTableViewController: UITableViewController {
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
-            } else if self.list.todos.contains(textField.text!) {
+            } else if self.list.todos.contains(Todo(name: textField.text!)) {
                 let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo with this name.", preferredStyle: .alert)
                 duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(duplicateNameAlert, animated: true, completion: nil)
                 return
             } else {
                 self.tableView.performBatchUpdates({
-                    self.list.todos.append(textField.text!)
+                    self.list.todos.append(Todo(name: textField.text!))
                     self.tableView.insertRows(at: [IndexPath(row: self.list.todos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -83,13 +83,16 @@ class ListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let todo = list.todos[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
         let font = UIFont.systemFont(ofSize: 25.0)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
-            .foregroundColor: UIColor.white
+            // give completed todos gray strikethrough text, incomplete white text
+            .foregroundColor: todo.complete ? UIColor.gray : UIColor.white,
+            .strikethroughStyle: todo.complete ? NSUnderlineStyle.single.rawValue : 0
         ]
-        let attributedText = NSMutableAttributedString(string: list.todos[indexPath.row], attributes: attributes)
+        let attributedText = NSMutableAttributedString(string: list.todos[indexPath.row].name, attributes: attributes)
         cell.textLabel?.attributedText = attributedText
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         return cell
@@ -112,21 +115,8 @@ class ListTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tappedCell = tableView.cellForRow(at: indexPath)
-        guard let attributedTodoString = tappedCell?.textLabel?.attributedText else {
-            print("Unable to get attributed string from tapped cell")
-            return
-        }
-        let mutableTodoString = NSMutableAttributedString(attributedString: attributedTodoString)
-        let range = NSMakeRange(0, mutableTodoString.length)
-        // toggle strikethrough
-        mutableTodoString.enumerateAttribute(NSAttributedString.Key.strikethroughStyle, in: range, options: .longestEffectiveRangeNotRequired) { (attribute, range, pointer) in
-            if attribute != nil {
-                mutableTodoString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: range)
-            } else {
-                mutableTodoString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, mutableTodoString.length))
-            }
-        }
-        tappedCell?.textLabel?.attributedText = mutableTodoString
+        // toggle completed variable for todo then reload that row
+        list.todos[indexPath.row].complete = !list.todos[indexPath.row].complete
+        tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }
