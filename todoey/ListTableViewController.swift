@@ -115,8 +115,22 @@ class ListTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // toggle completed variable for todo then reload that row
-        list.todos[indexPath.row].complete = !list.todos[indexPath.row].complete
-        tableView.reloadRows(at: [indexPath], with: .fade)
+        // if complete, simply make incomplete
+        if list.todos[indexPath.row].complete {
+            list.todos[indexPath.row].complete = false
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        } else { // else make complete and move to bottom of list
+            tableView.performBatchUpdates({
+                list.todos[indexPath.row].complete = true
+                list.todos.append(list.todos[indexPath.row])
+                list.todos.remove(at: indexPath.row)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: list.todos.count - 1, section: 0))
+            }) { finished in
+                if finished {
+                    // reload section to refresh styles
+                    tableView.reloadSections([0], with: .none)
+                }
+            }
+        }
     }
 }
