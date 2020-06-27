@@ -126,29 +126,21 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            switch indexPath.section {
-            case 0:
-                tableView.performBatchUpdates({
+            tableView.performBatchUpdates({
+                switch indexPath.section {
+                case 0:
                     list.activeTodos.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }) { finished in
-                    if finished {
-                        // reload to refresh colors
-                        tableView.reloadData()
-                    }
-                }
-            case 1:
-                tableView.performBatchUpdates({
+                case 1:
                     list.completedTodos.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }) { finished in
-                    if finished {
-                        // reload to refresh colors
-                        tableView.reloadData()
-                    }
+                default:
+                    fatalError("list commit switch found third section")
                 }
-            default:
-                fatalError("commit switch found a third section")
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }) { finished in
+                if finished {
+                    // reload to refresh colors
+                    tableView.reloadData()
+                }
             }
         }
     }
