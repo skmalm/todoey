@@ -93,26 +93,19 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
+        let font = UIFont.systemFont(ofSize: 25.0)
+        var attributes: [NSAttributedString.Key: Any] = [.font: font]
         switch indexPath.section {
         case 0:
             let todo = list.activeTodos[indexPath.row]
-            let font = UIFont.systemFont(ofSize: 25.0)
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.white,
-                .strikethroughStyle: 0
-            ]
+            attributes[.foregroundColor] = UIColor.white
             let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
             cell.textLabel?.attributedText = attributedText
             cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         case 1:
             let todo = list.completedTodos[indexPath.row]
-            let font = UIFont.systemFont(ofSize: 25.0)
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.gray,
-                .strikethroughStyle: NSUnderlineStyle.single.rawValue
-            ]
+            attributes[.foregroundColor] = UIColor.gray
+            attributes[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
             let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
             cell.textLabel?.attributedText = attributedText
             cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[list.activeTodos.count + indexPath.row])
