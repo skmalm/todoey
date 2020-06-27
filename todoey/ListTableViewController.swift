@@ -162,7 +162,10 @@ class ListTableViewController: UITableViewController {
         }, completion: { finished in
                 if finished {
                     tableView.reloadData()
-                    tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .none, animated: true)
+                    // if this was an uncomplete, scroll to top
+                    if indexPath.section == 1 {
+                        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .none, animated: true)
+                    }
             }
         })
     }
