@@ -28,24 +28,14 @@ struct TodoList: Equatable {
     
     let name: String
     
-    var activeTodos: [Todo]
+    var activeTodos: [String]
     
-    var completedTodos: [Todo]
+    var completedTodos: [String]
     
     init(name: String) {
         self.name = name
-        activeTodos = [Todo]()
-        completedTodos = [Todo]()
+        activeTodos = [String]()
+        completedTodos = [String]()
     }
     
-}
-
-struct Todo: Equatable {
-    
-    static func == (lhs: Todo, rhs: Todo) -> Bool {
-           return lhs.name == rhs.name
-       }
-    
-    let name: String
-        
 }

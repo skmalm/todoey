@@ -59,14 +59,14 @@ class ListTableViewController: UITableViewController {
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
-            } else if self.list.activeTodos.contains(Todo(name: textField.text!)) {
+            } else if self.list.activeTodos.contains(textField.text!) {
                 let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo with this name.", preferredStyle: .alert)
                 duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(duplicateNameAlert, animated: true, completion: nil)
                 return
             } else {
                 self.tableView.performBatchUpdates({
-                    self.list.activeTodos.append(Todo(name: textField.text!))
+                    self.list.activeTodos.append(textField.text!)
                     self.tableView.insertRows(at: [IndexPath(row: self.list.activeTodos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -103,14 +103,14 @@ class ListTableViewController: UITableViewController {
         case 0:
             let todo = list.activeTodos[indexPath.row]
             attributes[.foregroundColor] = UIColor.white
-            let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
+            let attributedText = NSMutableAttributedString(string: todo, attributes: attributes)
             cell.textLabel?.attributedText = attributedText
             cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         case 1:
             let todo = list.completedTodos[indexPath.row]
             attributes[.foregroundColor] = UIColor.gray
             attributes[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
-            let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
+            let attributedText = NSMutableAttributedString(string: todo, attributes: attributes)
             cell.textLabel?.attributedText = attributedText
             cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[list.activeTodos.count + indexPath.row])
         default:
