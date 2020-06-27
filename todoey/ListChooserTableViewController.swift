@@ -19,11 +19,11 @@ class ListChooserTableViewController: UITableViewController {
         }
         let homeDefaultTodos = ["Sweep", "Organize bedroom", "Clean kitchen", "Reorder books", "Clean windows", "Do dishes", "Clean bathroom", "Mop", "Organize pantry", "Make bed", "Rearrange furniture", "Buy candles", "Clean bathtub"]
         for todo in homeDefaultTodos {
-            model.lists[0].todos.append(Todo(name: todo))
+            model.lists[0].activeTodos.append(Todo(name: todo))
         }
         let workDefaultTodos = ["Finish project", "Call client", "Submit hours"]
         for todo in workDefaultTodos {
-            model.lists[1].todos.append(Todo(name: todo))
+            model.lists[1].activeTodos.append(Todo(name: todo))
         }
     }
     

@@ -28,11 +28,14 @@ struct TodoList: Equatable {
     
     let name: String
     
-    var todos: [Todo]
+    var activeTodos: [Todo]
+    
+    var completedTodos: [Todo]
     
     init(name: String) {
         self.name = name
-        todos = [Todo]()
+        activeTodos = [Todo]()
+        completedTodos = [Todo]()
     }
     
 }
@@ -44,7 +47,5 @@ struct Todo: Equatable {
        }
     
     let name: String
-    
-    var complete = false
-    
+        
 }

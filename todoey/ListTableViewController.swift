@@ -33,8 +33,9 @@ class ListTableViewController: UITableViewController {
     // array with alpha level for each cell, creating a gradient effect
     var cellAlphas: [CGFloat] {
         var alphas = [CGFloat]()
-        let alphaIncrement: CGFloat = 1.0 / CGFloat(list.todos.count)
-        for i in 0..<list.todos.count {
+        let totalTodoCount = list.activeTodos.count + list.completedTodos.count
+        let alphaIncrement: CGFloat = 1.0 / CGFloat(totalTodoCount)
+        for i in 0..<totalTodoCount {
             alphas.append(1.0 - CGFloat(i) * alphaIncrement)
         }
         return alphas
@@ -54,20 +55,20 @@ class ListTableViewController: UITableViewController {
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
-            } else if self.list.todos.contains(Todo(name: textField.text!)) {
+            } else if self.list.activeTodos.contains(Todo(name: textField.text!)) {
                 let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo with this name.", preferredStyle: .alert)
                 duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(duplicateNameAlert, animated: true, completion: nil)
                 return
             } else {
                 self.tableView.performBatchUpdates({
-                    self.list.todos.append(Todo(name: textField.text!))
-                    self.tableView.insertRows(at: [IndexPath(row: self.list.todos.count - 1, section: 0)], with: .fade)
+                    self.list.activeTodos.append(Todo(name: textField.text!))
+                    self.tableView.insertRows(at: [IndexPath(row: self.list.activeTodos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
                         // reload table view data to refresh cell colors, then scroll to new row
                         self.tableView.reloadSections([0], with: .none)
-                        self.tableView.scrollToRow(at: IndexPath(row: self.list.todos.count - 1, section: 0), at: .none, animated: true)
+                        self.tableView.scrollToRow(at: IndexPath(row: self.list.activeTodos.count - 1, section: 0), at: .none, animated: true)
                     }
                 })
             }
@@ -78,36 +79,76 @@ class ListTableViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.todos.count
+        switch section {
+        case 0: return list.activeTodos.count
+        case 1: return list.completedTodos.count
+        default: fatalError("numberOfRowsInSection switch found a third section")
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let todo = list.todos[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
-        let font = UIFont.systemFont(ofSize: 25.0)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            // give completed todos gray strikethrough text, incomplete white text
-            .foregroundColor: todo.complete ? UIColor.gray : UIColor.white,
-            .strikethroughStyle: todo.complete ? NSUnderlineStyle.single.rawValue : 0
-        ]
-        let attributedText = NSMutableAttributedString(string: list.todos[indexPath.row].name, attributes: attributes)
-        cell.textLabel?.attributedText = attributedText
-        cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
+        switch indexPath.section {
+        case 0:
+            let todo = list.activeTodos[indexPath.row]
+            let font = UIFont.systemFont(ofSize: 25.0)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: UIColor.white,
+                .strikethroughStyle: 0
+            ]
+            let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
+            cell.textLabel?.attributedText = attributedText
+            cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
+        case 1:
+            let todo = list.completedTodos[indexPath.row]
+            let font = UIFont.systemFont(ofSize: 25.0)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: UIColor.gray,
+                .strikethroughStyle: NSUnderlineStyle.single.rawValue
+            ]
+            let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
+            cell.textLabel?.attributedText = attributedText
+            cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[list.activeTodos.count + indexPath.row])
+        default:
+            fatalError("cellForRowAt switch found a third section")
+        }
         return cell
     }
     
+    // TODO: Update deletion to account for multiple sections
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tableView.performBatchUpdates({
-                list.todos.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }) { finished in
-                if finished {
-                    // reload section to refresh colors
-                    tableView.reloadSections([0], with: .none)
+            switch indexPath.section {
+            case 0:
+                tableView.performBatchUpdates({
+                    list.activeTodos.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }) { finished in
+                    if finished {
+                        // reload to refresh colors
+                        tableView.reloadData()
+                    }
                 }
+            case 1:
+                tableView.performBatchUpdates({
+                    list.completedTodos.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }) { finished in
+                    if finished {
+                        // reload to refresh colors
+                        tableView.reloadData()
+                    }
+                }
+            default:
+                fatalError("commit switch found a third section")
             }
         }
     }
@@ -115,22 +156,29 @@ class ListTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // if complete, simply make incomplete
-        if list.todos[indexPath.row].complete {
-            list.todos[indexPath.row].complete = false
-            tableView.reloadRows(at: [indexPath], with: .fade)
-        } else { // else make complete and move to bottom of list
+        switch indexPath.section {
+        case 0:
+            // move active todo to completed todos
             tableView.performBatchUpdates({
-                list.todos[indexPath.row].complete = true
-                list.todos.append(list.todos[indexPath.row])
-                list.todos.remove(at: indexPath.row)
-                tableView.moveRow(at: indexPath, to: IndexPath(row: list.todos.count - 1, section: 0))
-            }) { finished in
-                if finished {
-                    // reload section to refresh styles
-                    tableView.reloadSections([0], with: .none)
-                }
-            }
+                let todoToComplete = list.activeTodos[indexPath.row]
+                list.activeTodos.remove(at: indexPath.row)
+                list.completedTodos.append(todoToComplete)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: list.completedTodos.count - 1, section: 1))
+            }, completion: { finished in
+                    if finished { tableView.reloadData() }
+            })
+        case 1:
+            // move completed todo to active todos
+            tableView.performBatchUpdates({
+                let todoToUncomplete = list.completedTodos[indexPath.row]
+                list.completedTodos.remove(at: indexPath.row)
+                list.activeTodos.insert(todoToUncomplete, at: 0)
+                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+            }, completion: { finished in
+                    if finished { tableView.reloadData() }
+            })
+        default:
+            fatalError("didSelectRowAt switch found a third section")
         }
     }
 }
