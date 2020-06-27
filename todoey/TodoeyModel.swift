@@ -10,6 +10,8 @@ import Foundation
 
 struct TodoeyModel {
     
+    var delegate: TodoeyModelDelegate?
+    
     var lists: [TodoList]
     
     init() {
@@ -18,7 +20,7 @@ struct TodoeyModel {
     
 }
 
-struct TodoList: Equatable {
+struct TodoList: Equatable, Codable {
     
     // Lists are considered the same if they have identical names
     
@@ -38,4 +40,8 @@ struct TodoList: Equatable {
         completedTodos = [String]()
     }
     
+}
+
+protocol TodoeyModelDelegate: NSObject {
+    func didUpdateList(_ list: TodoList)
 }

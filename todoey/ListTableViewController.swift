@@ -29,6 +29,8 @@ class ListTableViewController: UITableViewController {
     
     var list: TodoList!
     
+    weak var delegate: TodoeyModelDelegate?
+    
     // white is used as default color
     var listColor = UIColor.white
     
@@ -67,6 +69,7 @@ class ListTableViewController: UITableViewController {
             } else {
                 self.tableView.performBatchUpdates({
                     self.list.activeTodos.append(textField.text!)
+                    self.delegate?.didUpdateList(self.list)
                     self.tableView.insertRows(at: [IndexPath(row: self.list.activeTodos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -130,6 +133,7 @@ class ListTableViewController: UITableViewController {
                 default:
                     fatalError("list commit switch found third section")
                 }
+                delegate?.didUpdateList(list)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }) { finished in
                 if finished {
@@ -159,6 +163,7 @@ class ListTableViewController: UITableViewController {
             default:
                 fatalError("didSelectRowAt switch found a third section")
             }
+            delegate?.didUpdateList(list)
         }, completion: { finished in
                 if finished {
                     tableView.reloadData()

@@ -91,6 +91,7 @@ class ListChooserTableViewController: UITableViewController {
         let listIndex = model.lists.firstIndex(of: TodoList(name: selectedCell.textLabel!.text!))
         assert(listIndex != nil, "Failed to get list index in prepare")
         destinationListVC.list = model.lists[listIndex!]
+        destinationListVC.delegate = self
     }
 
     
@@ -130,5 +131,15 @@ class ListChooserTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.showListSegueID, sender: tableView.cellForRow(at: indexPath))
     }
+    
+}
+
+extension ListChooserTableViewController: TodoeyModelDelegate {
+    func didUpdateList(_ list: TodoList) {
+        guard let listIndex = model.lists.firstIndex(of: list) else { return }
+        model.lists[listIndex] = list
+    }
+    
+
     
 }
