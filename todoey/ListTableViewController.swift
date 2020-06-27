@@ -10,6 +10,7 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
     
+    
     // MARK: - LIFECYCLE
     
     override func viewDidLoad() {
@@ -23,6 +24,7 @@ class ListTableViewController: UITableViewController {
         navigationItem.title = list.name
     }
 
+    
     // MARK: - PROPERTIES
     
     var list: TodoList!
@@ -40,6 +42,8 @@ class ListTableViewController: UITableViewController {
         }
         return alphas
     }
+    
+    
     // MARK: - METHODS
     
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
@@ -115,8 +119,6 @@ class ListTableViewController: UITableViewController {
         return cell
     }
     
-    // TODO: Update deletion to account for multiple sections
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
@@ -137,6 +139,7 @@ class ListTableViewController: UITableViewController {
             }
         }
     }
+    
     
     // MARK: - UITableViewDelegate
     
