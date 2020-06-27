@@ -10,6 +10,7 @@ import UIKit
 
 class ListChooserTableViewController: UITableViewController {
 
+    
     // MARK: - LIFECYCLE
     
     override func viewDidLoad() {
@@ -34,10 +35,12 @@ class ListChooserTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    
     // MARK: - PROPERTIES
     
     var model = TodoeyModel()
         
+    
     // MARK: - METHODS
     
     
@@ -90,6 +93,7 @@ class ListChooserTableViewController: UITableViewController {
         destinationListVC.list = model.lists[listIndex!]
     }
 
+    
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,6 +123,7 @@ class ListChooserTableViewController: UITableViewController {
             })
         }
     }
+    
     
     // MARK: - UITableViewDelegate
     
