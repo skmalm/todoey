@@ -141,29 +141,23 @@ class ListTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            // move active todo to completed todos
-            tableView.performBatchUpdates({
+        tableView.performBatchUpdates({
+            switch indexPath.section {
+            case 0:
                 let todoToComplete = list.activeTodos[indexPath.row]
                 list.activeTodos.remove(at: indexPath.row)
                 list.completedTodos.append(todoToComplete)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: list.completedTodos.count - 1, section: 1))
-            }, completion: { finished in
-                    if finished { tableView.reloadData() }
-            })
-        case 1:
-            // move completed todo to active todos
-            tableView.performBatchUpdates({
+            case 1:
                 let todoToUncomplete = list.completedTodos[indexPath.row]
                 list.completedTodos.remove(at: indexPath.row)
                 list.activeTodos.insert(todoToUncomplete, at: 0)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
-            }, completion: { finished in
-                    if finished { tableView.reloadData() }
-            })
-        default:
-            fatalError("didSelectRowAt switch found a third section")
-        }
+            default:
+                fatalError("didSelectRowAt switch found a third section")
+            }
+        }, completion: { finished in
+                if finished { tableView.reloadData() }
+        })
     }
 }
