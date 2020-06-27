@@ -157,7 +157,10 @@ class ListTableViewController: UITableViewController {
                 fatalError("didSelectRowAt switch found a third section")
             }
         }, completion: { finished in
-                if finished { tableView.reloadData() }
+                if finished {
+                    tableView.reloadData()
+                    tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .none, animated: true)
+            }
         })
     }
 }
