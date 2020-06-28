@@ -43,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E60CF8E24A932400087244F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */,
+				9EE2AE59249803F700222386 /* ListTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		9E71E49324957BAE005AB97D = {
 			isa = PBXGroup;
 			children = (
@@ -63,13 +72,11 @@
 			isa = PBXGroup;
 			children = (
 				9E71E4A524957BAE005AB97D /* Main.storyboard */,
-				9EE2AE59249803F700222386 /* ListTableViewController.swift */,
-				9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */,
+				9E60CF8E24A932400087244F /* Controllers */,
 				9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */,
 				9E71E4B624958710005AB97D /* K.swift */,
-				9E71E4A824957BB1005AB97D /* Assets.xcassets */,
-				9E71E4AA24957BB1005AB97D /* LaunchScreen.storyboard */,
 				9E71E4AD24957BB1005AB97D /* Info.plist */,
+				9E71E4A824957BB1005AB97D /* Assets.xcassets */,
 				9E71E4B324957C5B005AB97D /* Supporting Files */,
 			);
 			path = todoey;
@@ -78,6 +85,7 @@
 		9E71E4B324957C5B005AB97D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9E71E4AA24957BB1005AB97D /* LaunchScreen.storyboard */,
 				9E71E49F24957BAE005AB97D /* AppDelegate.swift */,
 				9E71E4A124957BAE005AB97D /* SceneDelegate.swift */,
 			);
