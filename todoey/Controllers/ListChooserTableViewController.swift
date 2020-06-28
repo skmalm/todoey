@@ -15,17 +15,7 @@ class ListChooserTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for defaultListName in K.defaultListNames {
-            model.lists.append(TodoList(name: defaultListName))
-        }
-        let homeDefaultTodos = ["Sweep", "Organize bedroom", "Clean kitchen", "Reorder books", "Clean windows", "Do dishes", "Clean bathroom", "Mop", "Organize pantry", "Make bed", "Rearrange furniture", "Buy candles", "Clean bathtub"]
-        for todo in homeDefaultTodos {
-            model.lists[0].activeTodos.append(todo)
-        }
-        let workDefaultTodos = ["Finish project", "Call client", "Submit hours"]
-        for todo in workDefaultTodos {
-            model.lists[1].activeTodos.append(todo)
-        }
+        loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,11 +28,37 @@ class ListChooserTableViewController: UITableViewController {
     
     // MARK: - PROPERTIES
     
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("lists.plist")
+    let encoder = PropertyListEncoder()
+    let decoder = PropertyListDecoder()
+    
     var model = TodoeyModel()
         
     
     // MARK: - METHODS
     
+    func saveData() {
+        assert(dataFilePath != nil, "Error getting data file path while saving data")
+        do {
+            let data = try encoder.encode(model.lists)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error saving data. \(error)")
+        }
+    }
+    
+    func loadData() {
+        assert(dataFilePath != nil, "Error getting data file path while loading data")
+        // data may not yet exist if this is the user's first time running the app
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            do {
+                model.lists = try decoder.decode([TodoList].self, from: data)
+            } catch {
+                print("Error loading data. \(error)")
+            }
+        }
+        
+    }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
@@ -65,6 +81,7 @@ class ListChooserTableViewController: UITableViewController {
             } else {
                 self.tableView.performBatchUpdates({
                     self.model.lists.append(TodoList(name: textField.text!))
+                    self.saveData()
                     self.tableView.insertRows(at: [IndexPath(row: self.model.lists.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -115,6 +132,7 @@ class ListChooserTableViewController: UITableViewController {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
                 model.lists.remove(at: indexPath.row)
+                saveData()
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }, completion: { finished in
                 if finished {
@@ -138,6 +156,7 @@ extension ListChooserTableViewController: TodoeyModelDelegate {
     func didUpdateList(_ list: TodoList) {
         guard let listIndex = model.lists.firstIndex(of: list) else { return }
         model.lists[listIndex] = list
+        saveData()
     }
     
 
