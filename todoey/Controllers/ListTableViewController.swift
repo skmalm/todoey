@@ -156,15 +156,13 @@ class ListTableViewController: UITableViewController {
 //    }
     
     
-    // TODO: REIMPLEMENT SELECTION
-    
     // MARK: - UITableViewDelegate
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.performBatchUpdates({
-//            list.todos.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            delegate?.didUpdateList(list)
-//        }, completion: nil)
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.performBatchUpdates({
+            todos[indexPath.row].done = !todos[indexPath.row].done
+            saveData()
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }, completion: nil)
+    }
 }
