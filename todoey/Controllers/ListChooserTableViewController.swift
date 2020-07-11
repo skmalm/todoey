@@ -67,12 +67,6 @@ class ListChooserTableViewController: UITableViewController {
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
-                // TODO: Reimplement duplicate name check
-//            } else if self.model.lists.contains(TodoList(name: textField.text!)) {
-//                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo list with this name.", preferredStyle: .alert)
-//                duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                self.present(duplicateNameAlert, animated: true, completion: nil)
-//                return
             } else {
                 let newList = TodoList(context: self.context)
                 self.tableView.performBatchUpdates({
