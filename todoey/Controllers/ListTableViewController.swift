@@ -165,11 +165,15 @@ class ListTableViewController: UITableViewController {
 extension ListTableViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.text == nil || searchBar.text == "" {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
             loadData()
         } else {
             let request: NSFetchRequest<Todo> = Todo.fetchRequest()
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
             request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
             do {
                 let allTodos = try context.fetch(request)
@@ -184,6 +188,5 @@ extension ListTableViewController: UISearchBarDelegate {
                 print("Error loading data. \(error)")
             }
         }
-        searchBar.resignFirstResponder()
     }
 }
