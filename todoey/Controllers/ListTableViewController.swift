@@ -48,6 +48,9 @@ class ListTableViewController: UITableViewController {
     
     func loadData(query: String?) {
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+        let sortByDone = NSSortDescriptor(key: "done", ascending: true)
+        let sortByName = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sortByDone, sortByName]
         if query != nil && query != "" {
             request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
         }
@@ -160,7 +163,7 @@ class ListTableViewController: UITableViewController {
         tableView.performBatchUpdates({
             todos[indexPath.row].done = !todos[indexPath.row].done
             saveData()
-            tableView.reloadRows(at: [indexPath], with: .none)
+            loadData(query: searchBar.text)
         }, completion: nil)
     }
 }
