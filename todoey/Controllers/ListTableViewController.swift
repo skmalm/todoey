@@ -137,23 +137,22 @@ class ListTableViewController: UITableViewController {
         }
         return cell
     }
-    
-        // TODO: REIMPLEMENT DELETION
-    
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            tableView.performBatchUpdates({
-//                list.todos.remove(at: indexPath.row)
-//                delegate?.didUpdateList(list)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }) { finished in
-//                if finished {
-//                    // reload to refresh colors
-//                    tableView.reloadData()
-//                }
-//            }
-//        }
-//    }
+        
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.performBatchUpdates({
+                context.delete(todos[indexPath.row])
+                todos.remove(at: indexPath.row)
+                saveData()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }, completion: { finished in
+                if finished {
+                    // reload section to refresh colors
+                    tableView.reloadSections([0], with: .none)
+                }
+            })
+        }
+    }
     
     
     // MARK: - UITableViewDelegate

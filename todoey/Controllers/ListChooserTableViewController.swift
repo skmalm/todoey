@@ -119,23 +119,22 @@ class ListChooserTableViewController: UITableViewController {
         cell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
         return cell
     }
-    
-    // TODO: REIMPLEMENT DELETION
-    
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            tableView.performBatchUpdates({
-//                model.lists.remove(at: indexPath.row)
-//                saveData()
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }, completion: { finished in
-//                if finished {
-//                    // reload section to refresh colors
-//                    tableView.reloadSections([0], with: .none)
-//                }
-//            })
-//        }
-//    }
+        
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.performBatchUpdates({
+                context.delete(lists[indexPath.row])
+                lists.remove(at: indexPath.row)
+                saveData()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }, completion: { finished in
+                if finished {
+                    // reload section to refresh colors
+                    tableView.reloadSections([0], with: .none)
+                }
+            })
+        }
+    }
     
     
     // MARK: - UITableViewDelegate
