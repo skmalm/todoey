@@ -24,7 +24,7 @@ class ListTableViewController: UITableViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var list: TodoList? { didSet { loadData() }}
+    var list: TodoList? { didSet { loadData(query: nil) }}
     
     var todos = [Todo]()
     
@@ -46,8 +46,11 @@ class ListTableViewController: UITableViewController {
     
     // MARK: - METHODS
     
-    func loadData() {
+    func loadData(query: String?) {
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+        if query != nil && query != "" {
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+        }
         do {
             let allTodos = try context.fetch(request)
             todos.removeAll()
@@ -169,24 +172,6 @@ extension ListTableViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            loadData()
-        } else {
-            let request: NSFetchRequest<Todo> = Todo.fetchRequest()
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
-            request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-            do {
-                let allTodos = try context.fetch(request)
-                todos.removeAll()
-                for todo in allTodos {
-                    if todo.parentList == list {
-                        todos.append(todo)
-                    }
-                }
-                tableView.reloadData()
-            } catch {
-                print("Error loading data. \(error)")
-            }
-        }
+        loadData(query: searchText)
     }
 }
