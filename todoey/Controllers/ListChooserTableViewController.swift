@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ListChooserTableViewController: UITableViewController {
 
@@ -28,36 +29,29 @@ class ListChooserTableViewController: UITableViewController {
     
     // MARK: - PROPERTIES
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("lists.plist")
-    let encoder = PropertyListEncoder()
-    let decoder = PropertyListDecoder()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var model = TodoeyModel()
-        
+    var lists = [TodoList]()
+    
     
     // MARK: - METHODS
     
     func saveData() {
-        assert(dataFilePath != nil, "Error getting data file path while saving data")
         do {
-            let data = try encoder.encode(model.lists)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
             print("Error saving data. \(error)")
         }
     }
     
     func loadData() {
-        assert(dataFilePath != nil, "Error getting data file path while loading data")
-        // data may not yet exist if this is the user's first time running the app
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            do {
-                model.lists = try decoder.decode([TodoList].self, from: data)
-            } catch {
-                print("Error loading data. \(error)")
-            }
+        let request: NSFetchRequest<TodoList> = TodoList.fetchRequest()
+        do {
+            lists = try context.fetch(request)
+            tableView.reloadData()
+        } catch {
+            print("Error loading data. \(error)")
         }
-        
     }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
@@ -73,19 +67,21 @@ class ListChooserTableViewController: UITableViewController {
                 emptyNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
-            } else if self.model.lists.contains(TodoList(name: textField.text!)) {
-                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo list with this name.", preferredStyle: .alert)
-                duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(duplicateNameAlert, animated: true, completion: nil)
-                return
+                // TODO: Reimplement duplicate name check
+//            } else if self.model.lists.contains(TodoList(name: textField.text!)) {
+//                let duplicateNameAlert = UIAlertController(title: "Error", message: "There's already a todo list with this name.", preferredStyle: .alert)
+//                duplicateNameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                self.present(duplicateNameAlert, animated: true, completion: nil)
+//                return
             } else {
+                let newList = TodoList(context: self.context)
                 self.tableView.performBatchUpdates({
-                    self.model.lists.append(TodoList(name: textField.text!))
-                    self.saveData()
-                    self.tableView.insertRows(at: [IndexPath(row: self.model.lists.count - 1, section: 0)], with: .fade)
+                    newList.title = textField.text!
+                    self.lists.append(newList)
+                    self.tableView.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
-                        self.tableView.scrollToRow(at: IndexPath(row: self.model.lists.count - 1, section: 0), at: .none, animated: true)
+                        self.tableView.scrollToRow(at: IndexPath(row: self.lists.count - 1, section: 0), at: .none, animated: true)
                     }
                 })
             }
@@ -94,33 +90,29 @@ class ListChooserTableViewController: UITableViewController {
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedCell = sender as? UITableViewCell else {
-            print("List cell casting error")
-            return
+        let destinationListVC = segue.destination as! ListTableViewController
+        let selectedListIndex = tableView.indexPathForSelectedRow?.row
+        assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
+        destinationListVC.list = lists[selectedListIndex!]
+        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
+        if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
+            if selectedCell.backgroundColor != nil {
+                destinationListVC.listColor = selectedCell.backgroundColor!
+            }
         }
-        guard let destinationListVC = segue.destination as? ListTableViewController else {
-            print("Error getting destination ListViewController")
-            return
-        }
-        if selectedCell.backgroundColor != nil {
-            destinationListVC.listColor = selectedCell.backgroundColor!
-        }
-        let listIndex = model.lists.firstIndex(of: TodoList(name: selectedCell.textLabel!.text!))
-        assert(listIndex != nil, "Failed to get list index in prepare")
-        destinationListVC.list = model.lists[listIndex!]
-        destinationListVC.delegate = self
+        
     }
 
     
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.lists.count
+        return lists.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)!
-        cell.textLabel?.text = model.lists[indexPath.row].name
+        cell.textLabel?.text = lists[indexPath.row].title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         cell.textLabel?.textColor = .white
         // cycle through colors for cell backgrounds
@@ -128,37 +120,28 @@ class ListChooserTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tableView.performBatchUpdates({
-                model.lists.remove(at: indexPath.row)
-                saveData()
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }, completion: { finished in
-                if finished {
-                    // reload section to refresh colors
-                    tableView.reloadSections([0], with: .none)
-                }
-            })
-        }
-    }
+    // TODO: REIMPLEMENT DELETION
+    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            tableView.performBatchUpdates({
+//                model.lists.remove(at: indexPath.row)
+//                saveData()
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            }, completion: { finished in
+//                if finished {
+//                    // reload section to refresh colors
+//                    tableView.reloadSections([0], with: .none)
+//                }
+//            })
+//        }
+//    }
     
     
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: K.showListSegueID, sender: tableView.cellForRow(at: indexPath))
+        performSegue(withIdentifier: K.showListSegueID, sender: self)
     }
-    
-}
-
-extension ListChooserTableViewController: TodoeyModelDelegate {
-    func didUpdateList(_ list: TodoList) {
-        guard let listIndex = model.lists.firstIndex(of: list) else { return }
-        model.lists[listIndex] = list
-        saveData()
-    }
-    
-
     
 }
