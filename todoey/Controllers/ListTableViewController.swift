@@ -49,19 +49,17 @@ class ListTableViewController: UITableViewController {
     func loadData(query: String?) {
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
         let sortByDone = NSSortDescriptor(key: "done", ascending: true)
-        let sortByName = NSSortDescriptor(key: "name", ascending: true)
+        let sortByName = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
         request.sortDescriptors = [sortByDone, sortByName]
+        guard let listTitle = list?.title else { return }
+        // only filter by query if a non-empty query was provided
         if query != nil && query != "" {
-            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", query!)
+            request.predicate = NSPredicate(format: "parentList.title MATCHES %@ && name CONTAINS[cd] %@", listTitle, query!)
+        } else {
+            request.predicate = NSPredicate(format: "parentList.title MATCHES %@", listTitle)
         }
         do {
-            let allTodos = try context.fetch(request)
-            todos.removeAll()
-            for todo in allTodos {
-                if todo.parentList == list {
-                    todos.append(todo)
-                }
-            }
+            todos = try context.fetch(request)
             tableView.reloadData()
         } catch {
             print("Error loading data. \(error)")
