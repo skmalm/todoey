@@ -42,6 +42,7 @@ class ListTableViewController: UITableViewController {
         return alphas
     }
     
+    @IBOutlet weak var searchBar: UISearchBar! { didSet { searchBar.delegate = self }}
     
     // MARK: - METHODS
     
@@ -49,6 +50,7 @@ class ListTableViewController: UITableViewController {
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
         do {
             let allTodos = try context.fetch(request)
+            todos.removeAll()
             for todo in allTodos {
                 if todo.parentList == list {
                     todos.append(todo)
@@ -157,5 +159,31 @@ class ListTableViewController: UITableViewController {
             saveData()
             tableView.reloadRows(at: [indexPath], with: .none)
         }, completion: nil)
+    }
+}
+
+extension ListTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text == nil || searchBar.text == "" {
+            loadData()
+        } else {
+            let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+            request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
+            request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+            do {
+                let allTodos = try context.fetch(request)
+                todos.removeAll()
+                for todo in allTodos {
+                    if todo.parentList == list {
+                        todos.append(todo)
+                    }
+                }
+                tableView.reloadData()
+            } catch {
+                print("Error loading data. \(error)")
+            }
+        }
+        searchBar.resignFirstResponder()
     }
 }
