@@ -7,6 +7,18 @@
 //
 
 import Foundation
+import RealmSwift
+
+class TodoList: Object {
+    @objc dynamic var title: String = ""
+    let todos = List<Todo>()
+}
+
+class Todo: Object {
+    @objc dynamic var name: String = ""
+    @objc dynamic var done: Bool = false
+    let parentList = LinkingObjects(fromType: TodoList.self, property: "todos")
+}
 
 //struct TodoeyModel {
 //

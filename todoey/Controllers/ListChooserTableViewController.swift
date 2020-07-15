@@ -7,18 +7,13 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ListChooserTableViewController: UITableViewController {
 
     
     // MARK: - LIFECYCLE
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadData()
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(named: K.chooserBarColorName)
@@ -28,31 +23,15 @@ class ListChooserTableViewController: UITableViewController {
     
     
     // MARK: - PROPERTIES
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    var lists = [TodoList]()
+        
+    var lists: Results<TodoList> {
+        return realm.objects(TodoList.self)
+    }
+        
+    let realm = try! Realm()
     
     
     // MARK: - METHODS
-    
-    func saveData() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving data. \(error)")
-        }
-    }
-    
-    func loadData() {
-        let request: NSFetchRequest<TodoList> = TodoList.fetchRequest()
-        do {
-            lists = try context.fetch(request)
-            tableView.reloadData()
-        } catch {
-            print("Error loading data. \(error)")
-        }
-    }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
@@ -68,10 +47,12 @@ class ListChooserTableViewController: UITableViewController {
                 self.present(emptyNameAlert, animated: true, completion: nil)
                 return
             } else {
-                let newList = TodoList(context: self.context)
+                let newList = TodoList()
                 self.tableView.performBatchUpdates({
                     newList.title = textField.text!
-                    self.lists.append(newList)
+                    try! self.realm.write {
+                        self.realm.add(newList)
+                    }
                     self.tableView.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -83,19 +64,19 @@ class ListChooserTableViewController: UITableViewController {
         self.present(newListAlert, animated: true, completion: nil)
     }
         
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationListVC = segue.destination as! ListTableViewController
-        let selectedListIndex = tableView.indexPathForSelectedRow?.row
-        assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
-        destinationListVC.list = lists[selectedListIndex!]
-        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
-        if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
-            if selectedCell.backgroundColor != nil {
-                destinationListVC.listColor = selectedCell.backgroundColor!
-            }
-        }
-        
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let destinationListVC = segue.destination as! ListTableViewController
+//        let selectedListIndex = tableView.indexPathForSelectedRow?.row
+//        assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
+//        destinationListVC.list = lists[selectedListIndex!]
+//        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
+//        if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
+//            if selectedCell.backgroundColor != nil {
+//                destinationListVC.listColor = selectedCell.backgroundColor!
+//            }
+//        }
+//
+//    }
 
     
     // MARK: - UITableViewDataSource
@@ -117,9 +98,9 @@ class ListChooserTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
-                context.delete(lists[indexPath.row])
-                lists.remove(at: indexPath.row)
-                saveData()
+                try! realm.write {
+                    realm.delete(lists[indexPath.row])
+                }
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }, completion: { finished in
                 if finished {
@@ -133,8 +114,8 @@ class ListChooserTableViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: K.showListSegueID, sender: self)
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: K.showListSegueID, sender: self)
+//    }
     
 }
