@@ -64,19 +64,19 @@ class ListChooserTableViewController: UITableViewController {
         self.present(newListAlert, animated: true, completion: nil)
     }
         
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let destinationListVC = segue.destination as! ListTableViewController
-//        let selectedListIndex = tableView.indexPathForSelectedRow?.row
-//        assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
-//        destinationListVC.list = lists[selectedListIndex!]
-//        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
-//        if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
-//            if selectedCell.backgroundColor != nil {
-//                destinationListVC.listColor = selectedCell.backgroundColor!
-//            }
-//        }
-//
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationListVC = segue.destination as! ListTableViewController
+        let selectedListIndex = tableView.indexPathForSelectedRow?.row
+        assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
+        destinationListVC.list = lists[selectedListIndex!]
+        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
+        if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
+            if selectedCell.backgroundColor != nil {
+                destinationListVC.listColor = selectedCell.backgroundColor!
+            }
+        }
+
+    }
 
     
     // MARK: - UITableViewDataSource
@@ -114,8 +114,8 @@ class ListChooserTableViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: K.showListSegueID, sender: self)
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: K.showListSegueID, sender: self)
+    }
     
 }
