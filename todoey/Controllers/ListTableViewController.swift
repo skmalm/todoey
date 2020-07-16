@@ -24,12 +24,10 @@ class ListTableViewController: UITableViewController {
 
     let realm = try! Realm()
     
-    var list: TodoList! { didSet {
-//        loadData(query: nil)
-    }}
+    var list: TodoList!
 
     var todos: Results<Todo> {
-        return realm.objects(Todo.self).filter("parentList = %@", list!)
+        return realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
     }
     
     // white is used as default color
@@ -159,7 +157,8 @@ class ListTableViewController: UITableViewController {
             try! realm.write {
                 let todo = realm.objects(Todo.self).filter("name = %@", tableView.cellForRow(at: indexPath)!.textLabel!.text!).first!
                 todo.done = !todo.done
-                tableView.reloadRows(at: [indexPath], with: .fade)
+                // reload data to move down upon completion, or vice versa
+                tableView.reloadData()
             }
         }, completion: nil)
     }
