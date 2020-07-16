@@ -27,8 +27,15 @@ class ListTableViewController: UITableViewController {
     var list: TodoList!
 
     var todos: Results<Todo> {
-        return realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
+        if searchQuery == "" {
+            return realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
+        } else {
+            return realm.objects(Todo.self).filter("parentList = %@ AND name CONTAINS[cd] %@", list!, searchQuery).sorted(byKeyPath: "done")
+        }
+        
     }
+    
+    var searchQuery = ""
     
     // white is used as default color
     var listColor = UIColor.white
@@ -46,27 +53,8 @@ class ListTableViewController: UITableViewController {
 
     @IBOutlet weak var searchBar: UISearchBar! { didSet { searchBar.delegate = self }}
 
+    
     // MARK: - METHODS
-
-//    func loadData(query: String?) {
-//        let request: NSFetchRequest<Todo> = Todo.fetchRequest()
-//        let sortByDone = NSSortDescriptor(key: "done", ascending: true)
-//        let sortByName = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
-//        request.sortDescriptors = [sortByDone, sortByName]
-//        guard let listTitle = list?.title else { return }
-//        // only filter by query if a non-empty query was provided
-//        if query != nil && query != "" {
-//            request.predicate = NSPredicate(format: "parentList.title MATCHES %@ && name CONTAINS[cd] %@", listTitle, query!)
-//        } else {
-//            request.predicate = NSPredicate(format: "parentList.title MATCHES %@", listTitle)
-//        }
-//        do {
-//            todos = try context.fetch(request)
-//            tableView.reloadData()
-//        } catch {
-//            print("Error loading data. \(error)")
-//        }
-//    }
 
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
         let newTodoAlert = UIAlertController(title: "Add New Todo", message: nil, preferredStyle: .alert)
@@ -170,7 +158,8 @@ extension ListTableViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        loadData(query: searchText)
-//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchQuery = searchText
+        tableView.reloadData()
+    }
 }
