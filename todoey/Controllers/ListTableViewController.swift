@@ -54,9 +54,9 @@ class ListTableViewController: UITableViewController {
 
     private func loadTodos(query: String? = nil) {
         if query == nil || query == "" {
-            todos = realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
+            todos = list.todos.sorted(byKeyPath: "done")
         } else {
-            todos = realm.objects(Todo.self).filter("parentList = %@ AND name CONTAINS[cd] %@", list!, query!).sorted(byKeyPath: "done")
+            todos = list.todos.filter("name CONTAINS[cd] %@", query!).sorted(byKeyPath: "done")
         }
     }
     
@@ -78,9 +78,9 @@ class ListTableViewController: UITableViewController {
                 self.tableView.performBatchUpdates({
                     newTodo.name = textField.text!
                     newTodo.done = false
-                    newTodo.parentList = self.list
                     try! self.realm.write {
                         self.realm.add(newTodo)
+                        self.list.todos.append(newTodo)
                     }
                     self.loadTodos()
                     self.tableView.insertRows(at: [IndexPath(row: self.todos!.count - 1, section: 0)], with: .fade)
