@@ -100,10 +100,10 @@ class ListChooserTableViewController: UITableViewController {
     }
         
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        if editingStyle == .delete, let lists = lists {
             tableView.performBatchUpdates({
                 try! realm.write {
-                    realm.delete(lists![indexPath.row])
+                    realm.delete(lists[indexPath.row])
                 }
                 loadLists()
                 tableView.deleteRows(at: [indexPath], with: .fade)
