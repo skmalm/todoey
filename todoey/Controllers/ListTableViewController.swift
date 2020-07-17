@@ -31,7 +31,7 @@ class ListTableViewController: UITableViewController {
     
     var list: TodoList!
 
-    var todos: Results<Todo>!
+    var todos: Results<Todo>?
     
     // white is used as default color
     var listColor = UIColor.white
@@ -39,7 +39,7 @@ class ListTableViewController: UITableViewController {
     // array with alpha level for each cell, creating a gradient effect
     var cellAlphas: [CGFloat] {
         var alphas = [CGFloat]()
-        let totalTodoCount = todos.count
+        let totalTodoCount = todos?.count ?? 0
         let alphaIncrement: CGFloat = 1.0 / CGFloat(totalTodoCount)
         for i in 0..<totalTodoCount {
             alphas.append(1.0 - CGFloat(i) * alphaIncrement)
@@ -83,12 +83,12 @@ class ListTableViewController: UITableViewController {
                         self.realm.add(newTodo)
                     }
                     self.loadTodos()
-                    self.tableView.insertRows(at: [IndexPath(row: self.todos.count - 1, section: 0)], with: .fade)
+                    self.tableView.insertRows(at: [IndexPath(row: self.todos!.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
                         // reload table view data to refresh cell colors, then scroll to new row
                         self.tableView.reloadData()
-                        self.tableView.scrollToRow(at: IndexPath(row: self.todos.count - 1, section: 0), at: .none, animated: true)
+                        self.tableView.scrollToRow(at: IndexPath(row: self.todos!.count - 1, section: 0), at: .none, animated: true)
                     }
                 })
             }
@@ -104,7 +104,7 @@ class ListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todos.count
+        return todos?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,7 +112,9 @@ class ListTableViewController: UITableViewController {
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
-        let todo = todos[indexPath.row]
+        guard let todo = todos?[indexPath.row] else {
+            fatalError("cellForRowAt tried to access non-existing todo")
+        }
         if !todo.done {
             attributes[.foregroundColor] = UIColor.white
             let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
@@ -130,7 +132,7 @@ class ListTableViewController: UITableViewController {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
                 try! realm.write {
-                    realm.delete(todos[indexPath.row])
+                    realm.delete(todos![indexPath.row])
                 }
                 loadTodos()
                 tableView.deleteRows(at: [indexPath], with: .fade)

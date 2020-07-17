@@ -24,7 +24,7 @@ class ListChooserTableViewController: UITableViewController {
     
     // MARK: - PROPERTIES
         
-    var lists: Results<TodoList>!
+    var lists: Results<TodoList>?
         
     let realm = try! Realm()
     
@@ -36,6 +36,7 @@ class ListChooserTableViewController: UITableViewController {
     }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
+        guard let lists = lists else { return }
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
         newListAlert.addTextField { textField in
             textField.placeholder = "Enter List Name"
@@ -56,10 +57,10 @@ class ListChooserTableViewController: UITableViewController {
                         self.realm.add(newList)
                     }
                     self.loadLists()
-                    self.tableView.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .fade)
+                    self.tableView.insertRows(at: [IndexPath(row: lists.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
-                        self.tableView.scrollToRow(at: IndexPath(row: self.lists.count - 1, section: 0), at: .none, animated: true)
+                        self.tableView.scrollToRow(at: IndexPath(row: lists.count - 1, section: 0), at: .none, animated: true)
                     }
                 })
             }
@@ -71,8 +72,8 @@ class ListChooserTableViewController: UITableViewController {
         let destinationListVC = segue.destination as! ListTableViewController
         let selectedListIndex = tableView.indexPathForSelectedRow?.row
         assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
-        destinationListVC.list = lists[selectedListIndex!]
-        destinationListVC.navigationItem.title = lists[selectedListIndex!].title
+        destinationListVC.list = lists![selectedListIndex!]
+        destinationListVC.navigationItem.title = lists![selectedListIndex!].title
         if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
             if selectedCell.backgroundColor != nil {
                 destinationListVC.listColor = selectedCell.backgroundColor!
@@ -85,12 +86,12 @@ class ListChooserTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return lists?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)!
-        cell.textLabel?.text = lists[indexPath.row].title
+        cell.textLabel?.text = lists![indexPath.row].title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         cell.textLabel?.textColor = .white
         // cycle through colors for cell backgrounds
@@ -102,7 +103,7 @@ class ListChooserTableViewController: UITableViewController {
         if editingStyle == .delete {
             tableView.performBatchUpdates({
                 try! realm.write {
-                    realm.delete(lists[indexPath.row])
+                    realm.delete(lists![indexPath.row])
                 }
                 loadLists()
                 tableView.deleteRows(at: [indexPath], with: .fade)
