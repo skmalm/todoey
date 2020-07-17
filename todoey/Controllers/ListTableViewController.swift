@@ -77,7 +77,6 @@ class ListTableViewController: UITableViewController {
                 let newTodo = Todo()
                 self.tableView.performBatchUpdates({
                     newTodo.name = textField.text!
-                    newTodo.done = false
                     try! self.realm.write {
                         self.realm.add(newTodo)
                         self.list.todos.append(newTodo)
