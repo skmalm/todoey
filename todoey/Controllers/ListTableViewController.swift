@@ -148,10 +148,10 @@ class ListTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedTodo = todos?[indexPath.row] else { return }
         tableView.performBatchUpdates({
             try! realm.write {
-                let todo = realm.objects(Todo.self).filter("name = %@", tableView.cellForRow(at: indexPath)!.textLabel!.text!).first!
-                todo.done = !todo.done
+                selectedTodo.done = !selectedTodo.done
                 // reload data to move down upon completion, or vice versa
                 loadTodos()
                 tableView.reloadData()
