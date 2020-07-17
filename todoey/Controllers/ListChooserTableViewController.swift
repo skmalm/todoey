@@ -17,21 +17,23 @@ class ListChooserTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = UIColor(named: K.chooserBarColorName)
-        // reload data to ensure no row is selected
+        loadLists()
         tableView.reloadData()
     }
     
     
     // MARK: - PROPERTIES
         
-    var lists: Results<TodoList> {
-        return realm.objects(TodoList.self)
-    }
+    var lists: Results<TodoList>!
         
     let realm = try! Realm()
     
     
     // MARK: - METHODS
+    
+    private func loadLists() {
+        lists = realm.objects(TodoList.self)
+    }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
@@ -53,6 +55,7 @@ class ListChooserTableViewController: UITableViewController {
                     try! self.realm.write {
                         self.realm.add(newList)
                     }
+                    self.loadLists()
                     self.tableView.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -101,6 +104,7 @@ class ListChooserTableViewController: UITableViewController {
                 try! realm.write {
                     realm.delete(lists[indexPath.row])
                 }
+                loadLists()
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }, completion: { finished in
                 if finished {

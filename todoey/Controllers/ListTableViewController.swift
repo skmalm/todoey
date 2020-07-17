@@ -14,6 +14,11 @@ class ListTableViewController: UITableViewController {
 
     // MARK: - LIFECYCLE
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadTodos()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = listColor
@@ -26,16 +31,7 @@ class ListTableViewController: UITableViewController {
     
     var list: TodoList!
 
-    var todos: Results<Todo> {
-        if searchQuery == "" {
-            return realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
-        } else {
-            return realm.objects(Todo.self).filter("parentList = %@ AND name CONTAINS[cd] %@", list!, searchQuery).sorted(byKeyPath: "done")
-        }
-        
-    }
-    
-    var searchQuery = ""
+    var todos: Results<Todo>!
     
     // white is used as default color
     var listColor = UIColor.white
@@ -56,6 +52,14 @@ class ListTableViewController: UITableViewController {
     
     // MARK: - METHODS
 
+    private func loadTodos(query: String? = nil) {
+        if query == nil || query == "" {
+            todos = realm.objects(Todo.self).filter("parentList = %@", list!).sorted(byKeyPath: "done")
+        } else {
+            todos = realm.objects(Todo.self).filter("parentList = %@ AND name CONTAINS[cd] %@", list!, query!).sorted(byKeyPath: "done")
+        }
+    }
+    
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
         let newTodoAlert = UIAlertController(title: "Add New Todo", message: nil, preferredStyle: .alert)
         newTodoAlert.addTextField { textField in
@@ -78,6 +82,7 @@ class ListTableViewController: UITableViewController {
                     try! self.realm.write {
                         self.realm.add(newTodo)
                     }
+                    self.loadTodos()
                     self.tableView.insertRows(at: [IndexPath(row: self.todos.count - 1, section: 0)], with: .fade)
                 }, completion: { finished in
                     if finished {
@@ -127,6 +132,7 @@ class ListTableViewController: UITableViewController {
                 try! realm.write {
                     realm.delete(todos[indexPath.row])
                 }
+                loadTodos()
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }, completion: { finished in
                 if finished {
@@ -146,6 +152,7 @@ class ListTableViewController: UITableViewController {
                 let todo = realm.objects(Todo.self).filter("name = %@", tableView.cellForRow(at: indexPath)!.textLabel!.text!).first!
                 todo.done = !todo.done
                 // reload data to move down upon completion, or vice versa
+                loadTodos()
                 tableView.reloadData()
             }
         }, completion: nil)
@@ -159,7 +166,7 @@ extension ListTableViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchQuery = searchText
+        loadTodos(query: searchText)
         tableView.reloadData()
     }
 }
