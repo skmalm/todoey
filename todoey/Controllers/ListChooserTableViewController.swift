@@ -32,7 +32,7 @@ class ListChooserTableViewController: UITableViewController {
     // MARK: - METHODS
     
     private func loadLists() {
-        lists = realm.objects(TodoList.self)
+        lists = realm.objects(TodoList.self).sorted(byKeyPath: "dateCreated")
     }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {

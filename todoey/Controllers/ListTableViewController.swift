@@ -54,7 +54,8 @@ class ListTableViewController: UITableViewController {
 
     private func loadTodos(query: String? = nil) {
         if query == nil || query == "" {
-            todos = list.todos.sorted(byKeyPath: "done")
+            let sortDescriptors = [SortDescriptor(keyPath: "done", ascending: true), SortDescriptor(keyPath: "dateCreated", ascending: true)]
+            todos = list.todos.sorted(by: sortDescriptors)
         } else {
             todos = list.todos.filter("name CONTAINS[cd] %@", query!).sorted(byKeyPath: "done")
         }
