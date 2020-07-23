@@ -130,23 +130,6 @@ class ListTableViewController: UITableViewController {
         return cell
     }
 
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete, let todos = todos {
-//            tableView.performBatchUpdates({
-//                try! realm.write {
-//                    realm.delete(todos[indexPath.row])
-//                }
-//                loadTodos()
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }, completion: { finished in
-//                if finished {
-//                    // reload section to refresh colors
-//                    tableView.reloadSections([0], with: .none)
-//                }
-//            })
-//        }
-//    }
-
 
     // MARK: - UITableViewDelegate
 
