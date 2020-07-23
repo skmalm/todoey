@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class ListTableViewController: UITableViewController {
 
@@ -108,7 +109,8 @@ class ListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)! as! SwipeTableViewCell
+        cell.delegate = self
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
@@ -128,22 +130,22 @@ class ListTableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete, let todos = todos {
-            tableView.performBatchUpdates({
-                try! realm.write {
-                    realm.delete(todos[indexPath.row])
-                }
-                loadTodos()
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }, completion: { finished in
-                if finished {
-                    // reload section to refresh colors
-                    tableView.reloadSections([0], with: .none)
-                }
-            })
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete, let todos = todos {
+//            tableView.performBatchUpdates({
+//                try! realm.write {
+//                    realm.delete(todos[indexPath.row])
+//                }
+//                loadTodos()
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            }, completion: { finished in
+//                if finished {
+//                    // reload section to refresh colors
+//                    tableView.reloadSections([0], with: .none)
+//                }
+//            })
+//        }
+//    }
 
 
     // MARK: - UITableViewDelegate
@@ -171,4 +173,36 @@ extension ListTableViewController: UISearchBarDelegate {
         loadTodos(query: searchText)
         tableView.reloadData()
     }
+}
+
+extension ListTableViewController: SwipeTableViewCellDelegate {
+ 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            tableView.performBatchUpdates({ [weak self] in
+                guard let self = self, let todos = self.todos else { return }
+                try! self.realm.write {
+                    self.realm.delete(todos[indexPath.row])
+                }
+                self.loadTodos()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }, completion: { finished in
+                if finished {
+                    // reload section to refresh colors
+                    tableView.reloadSections([0], with: .none)
+                }
+            })
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        return [deleteAction]
+    }
+    
+    // Long right-swipe immediately deletes todo
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive(automaticallyDelete: false)
+        return options
+    }
+    
 }
