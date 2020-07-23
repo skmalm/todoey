@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // Ensure that Realm is able to be initialized correctly
+        do {
+            _ = try Realm()
+        } catch {
+            print("Error initializing Realm: \(error)")
+        }
+        
+        // Set default nav bar colors & effects
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         UINavigationBar.appearance().tintColor = .black
