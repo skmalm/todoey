@@ -37,17 +37,6 @@ class ListTableViewController: TodoeyTableViewController {
     // white is used as default color
     var listColor = UIColor.white
 
-    // array with alpha level for each cell, creating a gradient effect
-    var cellAlphas: [CGFloat] {
-        var alphas = [CGFloat]()
-        let totalTodoCount = todos?.count ?? 0
-        let alphaIncrement: CGFloat = 1.0 / CGFloat(totalTodoCount)
-        for i in 0..<totalTodoCount {
-            alphas.append(1.0 - CGFloat(i) * alphaIncrement)
-        }
-        return alphas
-    }
-
     @IBOutlet weak var searchBar: UISearchBar! { didSet { searchBar.delegate = self }}
 
     
@@ -127,7 +116,7 @@ class ListTableViewController: TodoeyTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        let cellBackgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
+        let cellBackgroundColor = listColor.darken(byPercentage: (CGFloat(indexPath.row) / CGFloat(todos!.count)))!
         cell.backgroundColor = cellBackgroundColor
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
@@ -135,11 +124,11 @@ class ListTableViewController: TodoeyTableViewController {
             fatalError("cellForRowAt tried to access non-existing todo")
         }
         if !todo.done {
-            attributes[.foregroundColor] = UIColor.white
+            attributes[.foregroundColor] = ContrastColorOf(cellBackgroundColor, returnFlat: true)
             let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
             cell.textLabel?.attributedText = attributedText
         } else { // todo is done
-            attributes[.foregroundColor] = UIColor.gray
+            attributes[.foregroundColor] = FlatGrayDark()
             attributes[.strikethroughStyle] = NSUnderlineStyle.single.rawValue
             let attributedText = NSMutableAttributedString(string: todo.name, attributes: attributes)
             cell.textLabel?.attributedText = attributedText

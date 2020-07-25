@@ -90,11 +90,12 @@ class ListChooserTableViewController: TodoeyTableViewController {
         let destinationListVC = segue.destination as! ListTableViewController
         let selectedListIndex = tableView.indexPathForSelectedRow?.row
         assert(selectedListIndex != nil, "indexPathForSelectedRow was nil")
-        destinationListVC.list = lists![selectedListIndex!]
+        let selectedList = lists![selectedListIndex!]
+        destinationListVC.list = selectedList
         destinationListVC.navigationItem.title = lists![selectedListIndex!].title
         if let selectedCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) {
             if selectedCell.backgroundColor != nil {
-                destinationListVC.listColor = selectedCell.backgroundColor!
+                destinationListVC.listColor = UIColor(hexString: selectedList.colorHexValue)!
             }
         }
 
