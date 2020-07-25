@@ -11,6 +11,11 @@ import SwipeCellKit
 
 class TodoeyTableViewController: UITableViewController, SwipeTableViewCellDelegate {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.separatorStyle = .none
+    }
+    
     func deleteCell(at indexPath: IndexPath) {
         // Superclass method stub
     }
