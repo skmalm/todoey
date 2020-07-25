@@ -112,7 +112,7 @@ class ListChooserTableViewController: TodoeyTableViewController {
         cell.textLabel?.text = lists![indexPath.row].title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         if let listColor = UIColor(hexString: lists![indexPath.row].colorHexValue) {
-            cell.backgroundColor = listColor
+            cell.backgroundColor = GradientColor(.leftToRight, frame: cell.frame, colors: [listColor, listColor.darken(byPercentage: 0.3)!])
             cell.textLabel?.textColor = ContrastColorOf(listColor, returnFlat: true)
         }
         // cycle through colors for cell backgrounds
