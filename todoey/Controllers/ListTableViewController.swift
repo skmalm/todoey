@@ -23,6 +23,12 @@ class ListTableViewController: TodoeyTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = listColor
+        // Set searchBar color to match list color
+        searchBar.barTintColor = listColor.lighten(byPercentage: 0.3)
+        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
+            textField.backgroundColor = listColor
+            textField.textColor = ContrastColorOf(listColor, returnFlat: true)
+        }
     }
 
 
@@ -37,7 +43,9 @@ class ListTableViewController: TodoeyTableViewController {
     // white is used as default color
     var listColor = UIColor.white
 
-    @IBOutlet weak var searchBar: UISearchBar! { didSet { searchBar.delegate = self }}
+    @IBOutlet weak var searchBar: UISearchBar! { didSet {
+        searchBar.delegate = self
+    }}
 
     
     // MARK: - METHODS
