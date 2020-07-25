@@ -126,7 +126,8 @@ class ListTableViewController: TodoeyTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
+        let cellBackgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
+        cell.backgroundColor = cellBackgroundColor
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
         guard let todo = todos?[indexPath.row] else {

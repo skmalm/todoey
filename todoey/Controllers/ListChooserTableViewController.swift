@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ListChooserTableViewController: TodoeyTableViewController {
 
@@ -110,9 +111,12 @@ class ListChooserTableViewController: TodoeyTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = lists![indexPath.row].title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
-        cell.textLabel?.textColor = .white
+        if let listColor = UIColor(hexString: lists![indexPath.row].colorHexValue) {
+            cell.backgroundColor = listColor
+            cell.textLabel?.textColor = ContrastColorOf(listColor, returnFlat: true)
+        }
         // cycle through colors for cell backgrounds
-        cell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
+//        cell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
         return cell
     }
     

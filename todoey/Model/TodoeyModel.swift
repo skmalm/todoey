@@ -8,10 +8,12 @@
 
 import Foundation
 import RealmSwift
+import ChameleonFramework
 
 class TodoList: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var dateCreated: Date = Date()
+    @objc dynamic var colorHexValue: String = RandomFlatColorWithShade(.dark).hexValue()
     let todos = List<Todo>()
 }
 
