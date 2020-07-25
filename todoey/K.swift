@@ -9,9 +9,8 @@
 import Foundation
 
 struct K {
-    static let listCellID = "ListCell"
+    static let cellID = "TodoeyCell"
     static let showListSegueID = "ShowList"
-    static let todoCellID = "TodoCell"
     static let listColorNames = ["list0", "list1", "list2", "list3", "list4", "list5", "list6"]
     static let chooserBarColorName = "ChooserTheme"
     

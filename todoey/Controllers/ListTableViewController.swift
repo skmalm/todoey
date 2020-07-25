@@ -8,9 +8,8 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
 
-class ListTableViewController: UITableViewController {
+class ListTableViewController: TodoeyTableViewController {
 
 
     // MARK: - LIFECYCLE
@@ -62,6 +61,23 @@ class ListTableViewController: UITableViewController {
         }
     }
     
+    override func deleteCell(at indexPath: IndexPath) {
+        super.deleteCell(at: indexPath)
+        tableView.performBatchUpdates({ [weak self] in
+            guard let self = self, let todos = self.todos else { return }
+            try! self.realm.write {
+                self.realm.delete(todos[indexPath.row])
+            }
+            self.loadTodos()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }, completion: { finished in
+            if finished {
+                // reload section to refresh colors
+                self.tableView.reloadSections([0], with: .none)
+            }
+        })
+    }
+    
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
         let newTodoAlert = UIAlertController(title: "Add New Todo", message: nil, preferredStyle: .alert)
         newTodoAlert.addTextField { textField in
@@ -109,8 +125,7 @@ class ListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.todoCellID)! as! SwipeTableViewCell
-        cell.delegate = self
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.backgroundColor = listColor.withAlphaComponent(cellAlphas[indexPath.row])
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
@@ -156,36 +171,4 @@ extension ListTableViewController: UISearchBarDelegate {
         loadTodos(query: searchText)
         tableView.reloadData()
     }
-}
-
-extension ListTableViewController: SwipeTableViewCellDelegate {
- 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            tableView.performBatchUpdates({ [weak self] in
-                guard let self = self, let todos = self.todos else { return }
-                try! self.realm.write {
-                    self.realm.delete(todos[indexPath.row])
-                }
-                self.loadTodos()
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }, completion: { finished in
-                if finished {
-                    // reload section to refresh colors
-                    tableView.reloadSections([0], with: .none)
-                }
-            })
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        return [deleteAction]
-    }
-    
-    // Long right-swipe immediately deletes todo
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive(automaticallyDelete: false)
-        return options
-    }
-    
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4781FFA2E7E7C244C7617C68 /* Pods_todoey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B5AC063A3ECB1DDD287C03 /* Pods_todoey.framework */; };
+		9E21FA9C24CA3B8E00E9167A /* TodoeyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E21FA9B24CA3B8E00E9167A /* TodoeyTableViewController.swift */; };
 		9E71E4A024957BAE005AB97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E49F24957BAE005AB97D /* AppDelegate.swift */; };
 		9E71E4A224957BAE005AB97D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4A124957BAE005AB97D /* SceneDelegate.swift */; };
 		9E71E4A724957BAE005AB97D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E71E4A524957BAE005AB97D /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		11CE9987E08DB52CFC99E071 /* Pods-todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoey.release.xcconfig"; path = "Target Support Files/Pods-todoey/Pods-todoey.release.xcconfig"; sourceTree = "<group>"; };
 		2564EB3F199AABF9A9D77237 /* Pods-todoey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-todoey.debug.xcconfig"; path = "Target Support Files/Pods-todoey/Pods-todoey.debug.xcconfig"; sourceTree = "<group>"; };
+		9E21FA9B24CA3B8E00E9167A /* TodoeyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoeyTableViewController.swift; sourceTree = "<group>"; };
 		9E71E49C24957BAE005AB97D /* todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E71E49F24957BAE005AB97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E71E4A124957BAE005AB97D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			children = (
 				9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */,
 				9EE2AE59249803F700222386 /* ListTableViewController.swift */,
+				9E21FA9B24CA3B8E00E9167A /* TodoeyTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				9E71E4B724958710005AB97D /* K.swift in Sources */,
 				9EE2AE582498030C00222386 /* ListChooserTableViewController.swift in Sources */,
 				9EE2AE5A249803F700222386 /* ListTableViewController.swift in Sources */,
+				9E21FA9C24CA3B8E00E9167A /* TodoeyTableViewController.swift in Sources */,
 				9E71E4A224957BAE005AB97D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

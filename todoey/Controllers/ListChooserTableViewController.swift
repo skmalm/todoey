@@ -8,9 +8,8 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
 
-class ListChooserTableViewController: UITableViewController {
+class ListChooserTableViewController: TodoeyTableViewController {
 
     
     // MARK: - LIFECYCLE
@@ -34,6 +33,23 @@ class ListChooserTableViewController: UITableViewController {
     
     private func loadLists() {
         lists = realm.objects(TodoList.self).sorted(byKeyPath: "dateCreated")
+    }
+    
+    override func deleteCell(at indexPath: IndexPath) {
+        super.deleteCell(at: indexPath)
+        tableView.performBatchUpdates({ [weak self] in
+            guard let self = self, let lists = self.lists else { return }
+            try! self.realm.write {
+                self.realm.delete(lists[indexPath.row])
+            }
+            self.loadLists()
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }, completion: { finished in
+            if finished {
+                // reload section to refresh colors
+                self.tableView.reloadSections([0], with: .none)
+            }
+        })
     }
     
     @IBAction func addList(_ sender: UIBarButtonItem) {
@@ -91,8 +107,7 @@ class ListChooserTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellID)! as! SwipeTableViewCell
-        cell.delegate = self
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = lists![indexPath.row].title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
         cell.textLabel?.textColor = .white
@@ -109,40 +124,3 @@ class ListChooserTableViewController: UITableViewController {
     }
     
 }
-
-
-// MARK: - SwipeTableViewCellDelegate
-
-extension ListChooserTableViewController: SwipeTableViewCellDelegate {
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        
-        guard orientation == .right else { return nil }
-        
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            tableView.performBatchUpdates({ [weak self] in
-                guard let self = self, let lists = self.lists else { return }
-                try! self.realm.write {
-                    self.realm.delete(lists[indexPath.row])
-                }
-                self.loadLists()
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }, completion: { finished in
-                if finished {
-                    // reload section to refresh colors
-                    tableView.reloadSections([0], with: .none)
-                }
-            })
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        return [deleteAction]
-    }
-    
-    // Long right-swipe immediately deletes list
-    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive(automaticallyDelete: false)
-        return options
-    }
-    
-}
-
