@@ -17,7 +17,9 @@ class ListChooserTableViewController: TodoeyTableViewController {
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.backgroundColor = UIColor(named: K.chooserBarColorName)
+        if let navBar = navigationController?.navigationBar {
+            navBar.backgroundColor = UIColor(named: K.chooserBarColorName)
+        }
         loadLists()
         tableView.reloadData()
     }

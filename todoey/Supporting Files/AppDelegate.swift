@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set default nav bar colors & effects
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        UINavigationBar.appearance().tintColor = .black
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().compactAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance

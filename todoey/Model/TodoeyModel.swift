@@ -13,7 +13,7 @@ import ChameleonFramework
 class TodoList: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var dateCreated: Date = Date()
-    @objc dynamic var colorHexValue: String = RandomFlatColorWithShade(.dark).hexValue()
+    @objc dynamic var colorHexValue: String = K.brightColors.randomElement()!.hexValue()
     let todos = List<Todo>()
 }
 

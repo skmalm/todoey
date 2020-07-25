@@ -124,7 +124,8 @@ class ListTableViewController: TodoeyTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        let cellBackgroundColor = listColor.darken(byPercentage: (CGFloat(indexPath.row) / CGFloat(todos!.count)))!
+        let darkPercentage = CGFloat(indexPath.row) / CGFloat(todos!.count)
+        let cellBackgroundColor = listColor.darken(byPercentage: darkPercentage)!
         cell.backgroundColor = cellBackgroundColor
         let font = UIFont.systemFont(ofSize: 25.0)
         var attributes: [NSAttributedString.Key: Any] = [.font: font]
