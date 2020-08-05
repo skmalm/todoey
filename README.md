@@ -13,10 +13,10 @@ Install CocoaPods. Run `pod install` to install pods.
 
 ## Usage
 
-Use the plus button to create lists or todos.
-Swipe to delete lists or todos.
-Tap a todo to toggle completion.
-Your lists are saved locally with Realm.
+Use the plus button to create lists or todos.  
+Swipe to delete lists or todos.  
+Tap a todo to toggle completion.  
+Your lists are saved locally with Realm.  
 
 ## Dependencies
 
