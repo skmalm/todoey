@@ -27,9 +27,9 @@ class ListChooserTableViewController: TodoeyTableViewController {
     
     // MARK: - PROPERTIES
         
-    var lists: Results<TodoList>?
+    private var lists: Results<TodoList>?
         
-    let realm = try! Realm()
+    private let realm = try! Realm()
     
     
     // MARK: - METHODS
@@ -55,7 +55,7 @@ class ListChooserTableViewController: TodoeyTableViewController {
         })
     }
     
-    @IBAction func addList(_ sender: UIBarButtonItem) {
+    @IBAction private func addList(_ sender: UIBarButtonItem) {
         guard let lists = lists else { return }
         let newListAlert = UIAlertController(title: "Add New Todo List", message: nil, preferredStyle: .alert)
         newListAlert.addTextField { textField in

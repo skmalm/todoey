@@ -34,16 +34,16 @@ class ListTableViewController: TodoeyTableViewController {
 
     // MARK: - PROPERTIES
 
-    let realm = try! Realm()
+    private let realm = try! Realm()
     
     var list: TodoList!
 
-    var todos: Results<Todo>?
+    private var todos: Results<Todo>?
     
     // white is used as default color
     var listColor = UIColor.white
 
-    @IBOutlet weak var searchBar: UISearchBar! { didSet {
+    @IBOutlet private weak var searchBar: UISearchBar! { didSet {
         searchBar.delegate = self
     }}
 
@@ -76,7 +76,7 @@ class ListTableViewController: TodoeyTableViewController {
         })
     }
     
-    @IBAction func addTodo(_ sender: UIBarButtonItem) {
+    @IBAction private func addTodo(_ sender: UIBarButtonItem) {
         let newTodoAlert = UIAlertController(title: "Add New Todo", message: nil, preferredStyle: .alert)
         newTodoAlert.addTextField { textField in
             textField.placeholder = "Enter Todo Name"
