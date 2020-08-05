@@ -7,6 +7,9 @@ target 'todoey' do
 
 pod 'RealmSwift'
 pod 'SwipeCellKit'
-pod 'ChameleonFramework/Swift', :git => 'https://github.com/wowansm/Chameleon', :branch => 'swift5'
+
+    # Chameleon has a semantic warning I want to ignore
+
+pod 'ChameleonFramework/Swift', :git => 'https://github.com/wowansm/Chameleon', :branch => 'swift5', :inhibit_warnings => true
 
 end
