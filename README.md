@@ -5,7 +5,7 @@ Clean, simple, and colorful todo list app.
 I expanded upon the Todoey project app from Angela Yu's iOS development course on Udemy to create this app.
 
 ![Screen Shot 2020-08-05 at 12 06 17 PM](https://user-images.githubusercontent.com/27787704/89436646-8215b580-d714-11ea-8cb8-528d7f08f882.png)
-![Screen Shot 2020-08-05 at 12 06 11 PM](https://user-images.githubusercontent.com/27787704/89436654-8510a600-d714-11ea-9e23-4b5711c10bdb.png)
+![Screen Shot 2020-08-05 at 12 46 28 PM](https://user-images.githubusercontent.com/27787704/89440597-da02eb00-d719-11ea-9c86-bc61dc46408c.png)
 
 ## Installation
 
