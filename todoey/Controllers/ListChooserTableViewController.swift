@@ -111,16 +111,19 @@ class ListChooserTableViewController: TodoeyTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = lists![indexPath.row].title
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 25.0)
+        let listCell = super.tableView(tableView, cellForRowAt: indexPath) as! ListTableViewCell
+        listCell.listNameLabel.text = lists![indexPath.row].title
+        listCell.todoCountLabel.text = String(lists![indexPath.row].todos.count)
+        let listCellFont = UIFont.systemFont(ofSize: 25.0)
+        listCell.listNameLabel.font = listCellFont
+        listCell.todoCountLabel.font = listCellFont
         if let listColor = UIColor(hexString: lists![indexPath.row].colorHexValue) {
-            cell.backgroundColor = GradientColor(.leftToRight, frame: cell.frame, colors: [listColor, listColor.darken(byPercentage: 0.3)!])
-            cell.textLabel?.textColor = ContrastColorOf(listColor, returnFlat: true)
+            listCell.backgroundColor = GradientColor(.leftToRight, frame: listCell.frame, colors: [listColor, listColor.darken(byPercentage: 0.3)!])
+            let contrastColor = ContrastColorOf(listColor, returnFlat: true)
+            listCell.listNameLabel.textColor = contrastColor
+            listCell.todoCountLabel.textColor = contrastColor
         }
-        // cycle through colors for cell backgrounds
-//        cell.backgroundColor = UIColor(named: K.listColorNames[indexPath.row % K.listColorNames.count])
-        return cell
+        return listCell
     }
     
     

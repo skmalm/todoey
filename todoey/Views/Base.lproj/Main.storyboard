@@ -15,14 +15,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoeyCell" id="Fnp-63-Yre" customClass="SwipeTableViewCell" customModule="SwipeCellKit">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoeyCell" id="Fnp-63-Yre" customClass="ListTableViewCell" customModule="todoey" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fnp-63-Yre" id="b3u-de-orJ">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPJ-cg-pxn">
+                                            <rect key="frame" x="20" y="11" width="77" height="43"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iy5-zT-fJG">
+                                            <rect key="frame" x="383.5" y="11" width="10.5" height="43"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="OPJ-cg-pxn" firstAttribute="leading" secondItem="b3u-de-orJ" secondAttribute="leading" constant="20" id="9EK-19-kZu"/>
+                                        <constraint firstAttribute="bottom" secondItem="iy5-zT-fJG" secondAttribute="bottom" constant="11" id="NIm-fH-dXX"/>
+                                        <constraint firstAttribute="bottom" secondItem="OPJ-cg-pxn" secondAttribute="bottom" constant="11" id="NrW-tG-7s2"/>
+                                        <constraint firstItem="OPJ-cg-pxn" firstAttribute="top" secondItem="b3u-de-orJ" secondAttribute="top" constant="11" id="iJe-IJ-QuU"/>
+                                        <constraint firstItem="iy5-zT-fJG" firstAttribute="top" secondItem="b3u-de-orJ" secondAttribute="top" constant="11" id="nI3-Ht-KAt"/>
+                                        <constraint firstAttribute="trailing" secondItem="iy5-zT-fJG" secondAttribute="trailing" constant="20" id="tIa-al-q1P"/>
+                                        <constraint firstItem="iy5-zT-fJG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OPJ-cg-pxn" secondAttribute="trailing" constant="20" id="uQd-JP-Fke"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="listNameLabel" destination="OPJ-cg-pxn" id="bhR-gU-nDd"/>
+                                    <outlet property="todoCountLabel" destination="iy5-zT-fJG" id="Gko-v4-kkD"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

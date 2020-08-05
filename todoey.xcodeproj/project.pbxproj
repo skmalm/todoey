@@ -15,6 +15,7 @@
 		9E71E4A924957BB1005AB97D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E71E4A824957BB1005AB97D /* Assets.xcassets */; };
 		9E71E4AC24957BB1005AB97D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E71E4AA24957BB1005AB97D /* LaunchScreen.storyboard */; };
 		9E71E4B724958710005AB97D /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71E4B624958710005AB97D /* K.swift */; };
+		9E8F1A7E24DB01C700AA4EF1 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F1A7D24DB01C700AA4EF1 /* ListTableViewCell.swift */; };
 		9E9ACF502497EC2300EC9C89 /* TodoeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */; };
 		9EE2AE582498030C00222386 /* ListChooserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */; };
 		9EE2AE5A249803F700222386 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2AE59249803F700222386 /* ListTableViewController.swift */; };
@@ -32,6 +33,7 @@
 		9E71E4AB24957BB1005AB97D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E71E4AD24957BB1005AB97D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E71E4B624958710005AB97D /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		9E8F1A7D24DB01C700AA4EF1 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		9E9ACF4F2497EC2300EC9C89 /* TodoeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoeyModel.swift; sourceTree = "<group>"; };
 		9EE2AE572498030C00222386 /* ListChooserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListChooserTableViewController.swift; sourceTree = "<group>"; };
 		9EE2AE59249803F700222386 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -90,7 +92,7 @@
 		9E71E49E24957BAE005AB97D /* todoey */ = {
 			isa = PBXGroup;
 			children = (
-				9E71E4A524957BAE005AB97D /* Main.storyboard */,
+				9E8F1A7C24DB019400AA4EF1 /* Views */,
 				9E60CF8E24A932400087244F /* Controllers */,
 				9ECA9D6924AA42AA009E8A22 /* Model */,
 				9E71E4B624958710005AB97D /* K.swift */,
@@ -109,6 +111,15 @@
 				9E71E4A124957BAE005AB97D /* SceneDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9E8F1A7C24DB019400AA4EF1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E71E4A524957BAE005AB97D /* Main.storyboard */,
+				9E8F1A7D24DB01C700AA4EF1 /* ListTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9ECA9D6924AA42AA009E8A22 /* Model */ = {
@@ -243,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E71E4A024957BAE005AB97D /* AppDelegate.swift in Sources */,
+				9E8F1A7E24DB01C700AA4EF1 /* ListTableViewCell.swift in Sources */,
 				9E9ACF502497EC2300EC9C89 /* TodoeyModel.swift in Sources */,
 				9E71E4B724958710005AB97D /* K.swift in Sources */,
 				9EE2AE582498030C00222386 /* ListChooserTableViewController.swift in Sources */,
